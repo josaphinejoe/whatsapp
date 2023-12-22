@@ -5,7 +5,8 @@ part 'user-dto.g.dart';
 
 
 @JsonSerializable()
-class UserDto{
+class UserDto
+{
   String firstName;
   String? lastName;
 

@@ -3,7 +3,8 @@ import 'package:example/sdk/services/user-service/user-service.dart';
 import 'package:floater/floater.dart';
 import 'package:flutter/material.dart';
 
-class AddContactPageState extends WidgetStateBase<AddContactPage>{
+class AddContactPageState extends WidgetStateBase<AddContactPage>
+{
   final _userService = ServiceLocator.instance.resolve<UserService>();
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -35,7 +36,8 @@ class AddContactPageState extends WidgetStateBase<AddContactPage>{
   ValidationErrors get errors => this._validator.errors;
 
 
-  AddContactPageState() : super(){
+  AddContactPageState() : super()
+  {
     this._createValidator();
     this.onStateChange(() {
       this._validate();
@@ -43,19 +45,35 @@ class AddContactPageState extends WidgetStateBase<AddContactPage>{
   }
 
 
-  void save() async {
+  void save() async 
+  {
     this._validator.enable();
     if(!this._validate()){
       this.triggerStateChange();
       return;
     }
 
+  this.showLoading();
+  try
+  {
     final user =await this._userService.getUser();
     await user.addContact(this.firstName, this.phone, this.lastName);
-    this.reset();
+  }
+   catch(e)
+   {
+    debugPrint(e.toString());
+    return;
+   } 
+   finally
+   {
+    this.hideLoading();
+    this._reset();
+   }
   }
 
-  void reset() {
+
+  void _reset() 
+  {
     this._firstNameController.clear();
     this._lastNameController.clear();
     this._phoneController.clear();
@@ -63,13 +81,14 @@ class AddContactPageState extends WidgetStateBase<AddContactPage>{
     this._formKey = GlobalKey<FormState>();
   }
 
-
-  bool _validate(){
+  bool _validate()
+  {
     this._validator.validate(this);
     return this._validator.isValid;
   }
 
-  void _createValidator(){
+  void _createValidator()
+  {
     this._validator = Validator(disabled: true);
 
     this._validator
@@ -77,11 +96,9 @@ class AddContactPageState extends WidgetStateBase<AddContactPage>{
     .isRequired()
     .withMessage(message: "FirstName is required.");
 
-
     this._validator
     .prop("lastName", (t) => t.lastName)
     .isOptional();
-
 
     this._validator
     .prop("phone", (t) => t.phone)

@@ -18,18 +18,22 @@ class ContactsPageState extends WidgetStateBase<ContactsPage>
   List<Contact> get contacts => this._contacts;
 
 
-  ContactsPageState() :super(){
-    this.onInitState(() async {
+  ContactsPageState() :super()
+  {
+    this.onInitState(() async 
+    {
       await this._loadContacts();
     });
 
-    this.watch<ContactAddedEvent>(this._eventAggregator.subscribe<ContactAddedEvent>(),(event) async{
+    this.watch<ContactAddedEvent>(this._eventAggregator.subscribe<ContactAddedEvent>(),(event) async
+    {
       await this._loadContacts();
     });
   }
 
 
-  Future<void> onTapChat(Contact contact) async {
+  Future<void> onTapChat(Contact contact) async 
+  {
     this._navigator.pushNamed(
       NavigationService.instance.generateRoute(Routes.chats),arguments:{
         "phone":contact.phone
@@ -38,14 +42,15 @@ class ContactsPageState extends WidgetStateBase<ContactsPage>
   }
 
 
-  Future<void> _loadContacts() async {
+  Future<void> _loadContacts() async 
+  {
     this.showLoading();
       try 
       {
-        final contacts = await this._contactService.getContactList();
-         contacts.sort((a, b) => a.firstName.compareTo(b.firstName)); 
-         this._contacts=contacts; 
-      } catch (e) 
+        this._contacts = await this._contactService.getContactList();
+        this._contacts.sort((a, b) => a.firstName.compareTo(b.firstName)); 
+      } 
+      catch (e) 
       {
         return;
       } 

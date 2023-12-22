@@ -4,19 +4,22 @@ import 'package:floater/floater.dart';
 import 'splash-page.dart';
 import 'package:example/pages/routes.dart';
 
-class SplashPageState extends WidgetStateBase<SplashPage> {
+class SplashPageState extends WidgetStateBase<SplashPage> 
+{
   final _navigator = NavigationService.instance
       .retrieveNavigator("/"); 
   final _userService = ServiceLocator.instance.resolve<UserService>();
 
 
-  SplashPageState() : super() {
+  SplashPageState() : super() 
+  {
     this.onInitState(() {
       this._pauseAndGo();
     });
   }
 
-  Future<void> _pauseAndGo() async {
+  Future<void> _pauseAndGo() async 
+  {
     final userStatus = await this._userService.getUserStatus();
     await Future.delayed(Duration(seconds: 2));
     if(userStatus == UserStatus.authenticated)

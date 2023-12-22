@@ -8,7 +8,8 @@ import 'package:floater/floater.dart';
 import 'package:flutter/material.dart';
 
 
-class HomePageState extends WidgetStateBase<HomePage> {
+class HomePageState extends WidgetStateBase<HomePage> 
+{
   final _bottomNavManager = ServiceLocator.instance.resolve<BottomNavManager>();
   final _userService = ServiceLocator.instance.resolve<UserService>();
   final _eventAggregator = ServiceLocator.instance.resolve<EventAggregator>();
@@ -34,9 +35,11 @@ class HomePageState extends WidgetStateBase<HomePage> {
   NavigatorState get currentNavigator => this._bottomNavManager.navigatorState;
 
 
-  HomePageState() : super() {
-   this.onInitState(() async{
-      this._user= await this._userService.getUser();
+  HomePageState() : super() 
+  {
+   this.onInitState(() async
+   {
+      await this._loadUser();
       this._isReady=true;
       this.triggerStateChange();
     });
@@ -57,7 +60,8 @@ class HomePageState extends WidgetStateBase<HomePage> {
     }
 
 
-  void onActiveNavItemChanged(int index) {
+  void onActiveNavItemChanged(int index) 
+  {
     this._bottomNavManager.onNavSelected(index);
     this.triggerStateChange();
   }
@@ -65,4 +69,22 @@ class HomePageState extends WidgetStateBase<HomePage> {
   Future<void> onTapUser() async {
     this._navigator.pushNamed(Routes.user);
   }
+
+
+  Future<void> _loadUser() async 
+  {
+    this.showLoading();
+    try 
+      {
+        this._user = await this._userService.getUser();
+      } 
+      catch (e) 
+      {
+        return;
+      } 
+      finally 
+      {
+        this.hideLoading();
+      }
+    }
 }

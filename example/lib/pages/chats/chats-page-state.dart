@@ -34,28 +34,33 @@ class ChatsPageState extends WidgetStateBase<ChatsPage>
   List<MessageInfo> get chats => this._contact.chatList.reversed.toList();
 
 
-  ChatsPageState(this._phone) :super(){
-    this.onInitState(() async {
+  ChatsPageState(this._phone) :super()
+  {
+    this.onInitState(() async 
+    {
       await this._loadContact();
-      this._user = await this._userService.getUser();
+      await this._loadUser();
       this.triggerStateChange();
       this.isReady=true;
     });
 
-    this.watch<MessageSentEvent>(this._eventAggregator.subscribe<MessageSentEvent>(),(event) async{
+    this.watch<MessageSentEvent>(this._eventAggregator.subscribe<MessageSentEvent>(),(event) async
+    {
       await this._loadContact();
     });
   }
 
 
-    String getFormattedTime(int time){
+    String getFormattedTime(int time)
+    {
       DateTime messageTime = DateTime.fromMillisecondsSinceEpoch(time);
       String amPm = messageTime.hour < 12 ? 'AM' : 'PM';
       int formattedHour = messageTime.hour % 12 == 0 ? 12 : messageTime.hour % 12;
       return '$formattedHour:${messageTime.minute.toString().padLeft(2, '0')} $amPm';
     }
 
-    String getFormattedDate(int time){
+    String getFormattedDate(int time)
+    {
     DateTime now = DateTime.now();
     DateTime messageTime = DateTime.fromMillisecondsSinceEpoch(time);
 
@@ -73,21 +78,24 @@ class ChatsPageState extends WidgetStateBase<ChatsPage>
       }
     }
 
-  void handleSendMessage() async {
-        String message = this.messageController.text.trim();
+    void handleSendMessage() async 
+    {
+      String message = this.messageController.text.trim();
         if(message.isNotEmpty)
         {
           this._user.sendMessage(this._phone, message,false);
           this.messageController.clear();
           this.triggerStateChange();
         }
-      }
+    }
     
-    void goBack() {
+    void goBack() 
+    {
       this._navigator.pop();
     }
 
-    bool isFirstMsgOfDay(index, time){
+    bool isFirstMsgOfDay(index, time)
+    {
       if(index == this.chats.length-1)
         return true;
       else if(this.getFormattedDate(this.chats[index+1].time)!=time)
@@ -95,23 +103,56 @@ class ChatsPageState extends WidgetStateBase<ChatsPage>
       return false;
     }
 
-    Future<void> sendImage() async {
+    Future<void> sendImage() async 
+    {
       final picker = ImagePicker();
-      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-      if(pickedFile!=null){
-        this._user.sendMessage(this._phone, pickedFile.path,true);
-        this.triggerStateChange();
+      try
+      {
+          final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+          if(pickedFile!=null)
+          {
+            this._user.sendMessage(this._phone, pickedFile.path,true);
+            this.triggerStateChange();
+          }
+      }
+      catch(e)
+      {
+        debugPrint(e.toString());
+        return;
       }
     }
 
 
-    Future<void> _loadContact() async {
+    Future<void> _loadContact() async 
+    {
       this.showLoading();
-      try {
+      try 
+      {
         this._contact = await this._contactService.getContact(this._phone);
-      } catch (e) {
+      } 
+      catch (e) 
+      {
         return;
-      } finally {
+      } 
+      finally 
+      {
+        this.hideLoading();
+      }
+    }
+
+    Future<void> _loadUser() async 
+    {
+      this.showLoading();
+      try 
+      {
+        this._user = await this._userService.getUser();
+      } 
+      catch (e) 
+      {
+        return;
+      } 
+      finally 
+      {
         this.hideLoading();
       }
     }

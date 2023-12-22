@@ -22,7 +22,11 @@ class MockUserService implements UserService
 
 
   @override
-  Future<void> createUser(String firstName,String? lastName, String phone, String password ) async {
+  Future<void> createUser(String firstName,String? lastName, String phone, String password ) async 
+  {
+    given(firstName, "firstName").ensure((t) => t.isNotEmptyOrWhiteSpace);
+    given(phone, "phone").ensure((t) => t.isNotEmptyOrWhiteSpace);
+    given(password, "password").ensure((t) => t.isNotEmptyOrWhiteSpace);
 
     final userDto = UserDto(firstName, lastName, null, phone);
     this._user = UserProxy(userDto);
@@ -38,8 +42,8 @@ class MockUserService implements UserService
   }
 
   @override
-  Future<User> getUser() async{
-
+  Future<User> getUser() async
+  {
     await this._loadUserCredentials();
     if(this._user!=null)
       return this._user!;
@@ -47,7 +51,8 @@ class MockUserService implements UserService
       throw Exception("User not found");
   }
 
-  Future<UserStatus> getUserStatus() async {
+  Future<UserStatus> getUserStatus() async 
+  {
     await this._loadUserCredentials();
 
     if(this._isAuthenticated)
@@ -57,8 +62,8 @@ class MockUserService implements UserService
 
 
   @override
-  Future<void> updateUser(UserDto userDto)async {
-    
+  Future<void> updateUser(UserDto userDto)async 
+  {
     this._user =UserProxy(userDto);
     this._eventAggregator.publish(UserUpdatedEvent(this._user!));
 
@@ -66,7 +71,10 @@ class MockUserService implements UserService
     await this._userStorage.write(key: this._storageKey, value: json.encode(userCredentials.toJson()));
   }
 
-  Future<User> authenticate(String phone, String password) async {
+  Future<User> authenticate(String phone, String password) async 
+  {
+    given(phone, "phone").ensure((t) => t.isNotEmptyOrWhiteSpace);
+    given(password, "password").ensure((t) => t.isNotEmptyOrWhiteSpace);
 
     await this._loadUserCredentials();
 

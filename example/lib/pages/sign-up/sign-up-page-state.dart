@@ -26,7 +26,6 @@ class SignUpPageState extends WidgetStateBase<SignUpPage>
   TextEditingController get passwordController => this._passwordController;
 
 
-
   String get firstName => this._firstNameController.text;
   set firstName(String value) => (this.._firstNameController.text=value).triggerStateChange();
 
@@ -46,27 +45,43 @@ class SignUpPageState extends WidgetStateBase<SignUpPage>
   ValidationErrors get errors => this._validator.errors;
 
 
-    SignUpPageState() : super(){
-      this._createValidator();
-      this.onStateChange(() {
-        this._validate();
-      });
-    }
+  SignUpPageState() : super()
+  {
+    this._createValidator();
+    this.onStateChange(() {
+      this._validate();
+    });
+  }
 
 
-  void save() async {
+  void signUp() async 
+  {
     this._validator.enable();
     if(!this._validate()){
       this.triggerStateChange();
       return;
     }
-
-    await this._userService.createUser(this.firstName, this.lastName, this.phone, this.password);
-    this._navigator.pushReplacementNamed(Routes.login);
-    this.reset();
+    this.showLoading();
+    try
+    {
+      await this._userService.createUser(this.firstName, this.lastName, this.phone, this.password);
+      this._navigator.pushReplacementNamed(Routes.login);
+    }
+    catch(e)
+    {
+      debugPrint(e.toString());
+      return;
+    }
+    finally
+    {
+      this.hideLoading();
+      this._reset();
+    }
   }
 
-  void reset() {
+
+  void _reset() 
+  {
     this._firstNameController.clear();
     this._lastNameController.clear();
     this._phoneController.clear();
@@ -75,13 +90,14 @@ class SignUpPageState extends WidgetStateBase<SignUpPage>
     this._formKey = GlobalKey<FormState>();
   }
 
-
-  bool _validate(){
+  bool _validate()
+  {
     this._validator.validate(this);
     return this._validator.isValid;
   }
 
-  void _createValidator(){
+  void _createValidator()
+  {
     this._validator = Validator(disabled: true);
 
     this._validator
@@ -89,11 +105,9 @@ class SignUpPageState extends WidgetStateBase<SignUpPage>
     .isRequired()
     .withMessage(message: "FirstName is required.");
 
-
     this._validator
     .prop("lastName", (t) => t.lastName)
     .isOptional();
-
 
     this._validator
     .prop("phone", (t) => t.phone)

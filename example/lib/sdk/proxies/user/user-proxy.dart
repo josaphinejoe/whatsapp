@@ -11,7 +11,6 @@ class UserProxy implements User
   final _userService = ServiceLocator.instance.resolve<UserService>();
   final _contactService = ServiceLocator.instance.resolve<ContactService>();
 
-
   UserDto _dto;
 
   UserProxy(this._dto);
@@ -53,7 +52,6 @@ class UserProxy implements User
   Future<void> changeName(String firstName, String? lastName) async
   {
     given(firstName, "firstName").ensure((t) => t.isNotEmptyOrWhiteSpace);
-    given(lastName, "lastName").ensure((t) => t?.isNotEmptyOrWhiteSpace??true);
 
     final newUser = UserDto(firstName, lastName, this.displayPicture, this.phone);
     await this._userService.updateUser(newUser);

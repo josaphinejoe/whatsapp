@@ -45,7 +45,8 @@ class UserPageState extends WidgetStateBase<UserPage>
 
   UserPageState():super()
   {
-    this.onInitState(() async{
+    this.onInitState(() async
+    {
       this._user= await this._userService.getUser();
       this._firstName=this._user.firstName;
       this._lastName=this._user.lastName;
@@ -56,27 +57,44 @@ class UserPageState extends WidgetStateBase<UserPage>
   }
 
 
-  void saveFirstName()
+  void saveFirstName() async
   {
     if(this._firstName.isEmptyOrWhiteSpace)
       return;
-
-    this._user.changeName(this.firstName, this._user.lastName);
-    this.triggerStateChange();
+    try
+    {
+      await this._user.changeName(this.firstName, this._user.lastName);
+      this.triggerStateChange();
+    }
+    catch(e)
+    {
+      debugPrint(e.toString());
+    }
   }
 
-  void saveLastName(){
+  void saveLastName() async 
+  {
     if(this.lastName!=null && this.lastName!.isEmptyOrWhiteSpace)
       this.lastName=null;
-    this._user.changeName(this._user.firstName, this.lastName);
-    this.triggerStateChange();
+
+    try
+    {
+      this._user.changeName(this._user.firstName, this.lastName);
+      this.triggerStateChange();
+    }
+    catch(e)
+    {
+      debugPrint(e.toString());
+    }
   }
 
-  void goBack() {
+  void goBack() 
+  {
     this._navigator.pop();
   }
 
-  Future<void> editDp() async {
+  Future<void> editDp() async 
+  {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
@@ -86,16 +104,20 @@ class UserPageState extends WidgetStateBase<UserPage>
     }
   }
 
-  ImageProvider<Object> getImage(){
-    if(this.displayPicture !=null){
+  ImageProvider<Object> getImage()
+  {
+    if(this.displayPicture !=null)
+    {
       return FileImage(this.displayPicture!);
     }
-    else{
+    else
+    {
       return const NetworkImage("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgPp7AelDxUJQ_t928VVlyIqM4sAMLIOsHyWkVgVRPzvFaUuJkNZG6U7DV8oYjIwpwzVKWwEGOFqQ_8jBTwiz8iDrR0GlQUVom65RMzoaLrYvNhVbwcFdgo2glP2lgp076Dvl6oNjrOuQp5oQstI1SCbVXITSPofI12AdM-KaB0rQBPAyRR5qpE-z8hDg/s16000-rw/blank-profile-picture-hd-images-photo-5.JPG");
     }
   }
 
-  void goToSettings(){
+  void goToSettings()
+  {
     this._navigator.pushNamed(Routes.settings);
   }
 }

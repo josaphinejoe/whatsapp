@@ -78,7 +78,7 @@ class SignUpPage extends StatefulWidgetBase<SignUpPageState>{
               const SizedBox(height: 50.0,),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(primary: Colors.green[500]),
-               onPressed: this.state.hasErrors ? null : this.state.save,
+               onPressed: this.state.hasErrors ? null : this.state.signUp,
                child: const Text("Sign Up", style: TextStyle(color: Colors.white),))
             ],
           ),
