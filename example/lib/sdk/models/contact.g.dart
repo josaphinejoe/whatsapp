@@ -11,7 +11,7 @@ Contact _$ContactFromJson(Map<String, dynamic> json) => Contact(
       lastName: json['lastName'] as String?,
       phone: json['phone'] as String,
       displayPicture: json['displayPicture'] as String?,
-    )..chatList = (json['chatList'] as List<dynamic>)
+    )..chats = (json['chatList'] as List<dynamic>)
         .map((e) => MessageInfo.fromJson(e as Map<String, dynamic>))
         .toList();
 
@@ -20,5 +20,5 @@ Map<String, dynamic> _$ContactToJson(Contact instance) => <String, dynamic>{
       'lastName': instance.lastName,
       'phone': instance.phone,
       'displayPicture': instance.displayPicture,
-      'chatList': instance.chatList,
+      'chatList': instance.chats,
     };

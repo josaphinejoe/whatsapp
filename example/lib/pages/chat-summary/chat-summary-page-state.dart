@@ -15,18 +15,22 @@ class ChatSummaryPageState extends WidgetStateBase<ChatSummaryPage>{
   List<Chat> get chatList => this._chatList;
 
 
-  ChatSummaryPageState() : super(){
-    this.onInitState(() async {
+  ChatSummaryPageState() : super()
+  {
+    this.onInitState(() async 
+    {
       await this._loadChatList();
     });
 
-    this.watch<MessageSentEvent>(this._eventAggregator.subscribe<MessageSentEvent>(),(event) async{
+    this.watch<MessageSentEvent>(this._eventAggregator.subscribe<MessageSentEvent>(),(event) async
+    {
       await this._loadChatList();
     });
   }
 
 
-  String getFormattedDateTime(int time) {
+  String getFormattedDateTime(int time) 
+  {
       DateTime now = DateTime.now();
       DateTime messageTime = DateTime.fromMillisecondsSinceEpoch(time);
 
@@ -43,20 +47,27 @@ class ChatSummaryPageState extends WidgetStateBase<ChatSummaryPage>{
     }
 
 
-  Future<void> onTapChat(Chat chat) async {
+  Future<void> onTapChat(Chat chat) async 
+  {
     this._navigator.pushNamed(
       NavigationService.instance.generateRoute(Routes.chats)
       ,arguments: {"phone": chat.phone});
   }
 
 
-    Future<void> _loadChatList() async {
+    Future<void> _loadChatList() async 
+    {
       this.showLoading();
-      try {
+      try 
+      {
         this._chatList = await this._contactService.getChatList();
-      } catch (e) {
+      } 
+      catch (e) 
+      {
         return;
-      } finally {
+      } 
+      finally 
+      {
         this.hideLoading();
       }
     }

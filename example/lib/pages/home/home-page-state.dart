@@ -43,7 +43,8 @@ class HomePageState extends WidgetStateBase<HomePage>
       this._isReady=true;
       this.triggerStateChange();
     });
-    this.watch<UserUpdatedEvent>(this._eventAggregator.subscribe<UserUpdatedEvent>(),(event){
+    this.watch<UserUpdatedEvent>(this._eventAggregator.subscribe<UserUpdatedEvent>(),(event)
+    {
       this._user=event.user;
     });
   }

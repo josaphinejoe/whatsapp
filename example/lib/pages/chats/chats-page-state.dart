@@ -31,7 +31,7 @@ class ChatsPageState extends WidgetStateBase<ChatsPage>
 
   TextEditingController get messageController => this._messageController;
   Contact get contact => this._contact;
-  List<MessageInfo> get chats => this._contact.chatList.reversed.toList();
+  List<MessageInfo> get chats => this._contact.chats.reversed.toList();
 
 
   ChatsPageState(this._phone) :super()

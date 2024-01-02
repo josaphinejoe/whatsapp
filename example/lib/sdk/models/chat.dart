@@ -14,7 +14,7 @@ class Chat
 
     Chat({required this.firstName,this.lastName,required this.phone,required this.messageInfo, this.displayPicture});
 
-    //for serialize and deserialize
+    
     factory Chat.fromJson(Map<String,dynamic> json) => _$ChatFromJson(json);
 
     Map<String,dynamic> toJson()=> _$ChatToJson(this); 

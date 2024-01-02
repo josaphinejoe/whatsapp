@@ -34,7 +34,8 @@ class LoginPageState extends WidgetStateBase<LoginPage>
   bool get isErrorTextNeeded => this._isErrorTextNeeded;
 
 
-    LoginPageState() : super(){
+    LoginPageState() : super()
+    {
       this._createValidator();
       this.onStateChange(() {
         this._validate();
@@ -42,48 +43,57 @@ class LoginPageState extends WidgetStateBase<LoginPage>
     }
 
 
-  void login() async {
+  void login() async 
+  {
     this._validator.enable();
-    if(!this._validate()){
+    if(!this._validate())
+    {
       this.triggerStateChange();
       return;
     }
   this.showLoading();
-    try{
+    try
+    {
       await this._userService.authenticate(this.phone, this.password);
       this._navigator.pushReplacementNamed(Routes.home);
     }
-    catch(e){
+    catch(e)
+    {
       debugPrint(e.toString());
       this._isErrorTextNeeded=true;
       this.triggerStateChange();
       return;
     }
-    finally{
+    finally
+    {
       this.hideLoading();
       this._reset();
     }
   }
 
-  void clearUser() async{
+  void clearUser() async
+  {
     this._userService.clearUser();
     this._navigator.pushReplacementNamed(Routes.signUp);
   }
 
 
-  void _reset() {
+  void _reset() 
+  {
     this._phoneController.clear();
     this._passwordController.clear();
     this._formKey.currentState?.reassemble();
     this._formKey = GlobalKey<FormState>();
   }
 
-  bool _validate(){
+  bool _validate()
+  {
     this._validator.validate(this);
     return this._validator.isValid;
   }
 
-  void _createValidator(){
+  void _createValidator()
+  {
     this._validator = Validator(disabled: true);
 
     this._validator

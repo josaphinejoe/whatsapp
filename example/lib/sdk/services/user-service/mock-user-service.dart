@@ -28,14 +28,15 @@ class MockUserService implements UserService
     given(phone, "phone").ensure((t) => t.isNotEmptyOrWhiteSpace);
     given(password, "password").ensure((t) => t.isNotEmptyOrWhiteSpace);
 
-    final userDto = UserDto(firstName, lastName, null, phone);
-    this._user = UserProxy(userDto);
-    this._password=password;
 
     final String? storedUser = await this._userStorage.read(key: this._storageKey);
 
     if(storedUser == null)
     {
+      final userDto = UserDto(firstName, lastName, null, phone);
+      this._user = UserProxy(userDto);
+      this._password=password;
+
       final userCredentials = UserCredentials(userDto, password,false);
       await this._userStorage.write(key: this._storageKey, value: json.encode(userCredentials.toJson()));
     }

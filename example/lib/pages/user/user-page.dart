@@ -34,7 +34,8 @@ class UserPage extends StatefulWidgetBase<UserPageState>{
                   children: [
                     CircleAvatar(
                       radius: 100,
-                      backgroundImage: this.state.getImage(),
+                      foregroundImage: this.state.getImage(),
+                      backgroundImage: const NetworkImage("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgPp7AelDxUJQ_t928VVlyIqM4sAMLIOsHyWkVgVRPzvFaUuJkNZG6U7DV8oYjIwpwzVKWwEGOFqQ_8jBTwiz8iDrR0GlQUVom65RMzoaLrYvNhVbwcFdgo2glP2lgp076Dvl6oNjrOuQp5oQstI1SCbVXITSPofI12AdM-KaB0rQBPAyRR5qpE-z8hDg/s16000-rw/blank-profile-picture-hd-images-photo-5.JPG"),
                       backgroundColor:const Color(0xFF387463),
                     ),
                     Positioned(

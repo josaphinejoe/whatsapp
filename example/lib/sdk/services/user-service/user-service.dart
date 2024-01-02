@@ -10,5 +10,5 @@ Future<void> createUser(String firstName,String? lastName, String phone, String 
  Future<UserStatus> getUserStatus();
  Future<User> authenticate(String phone, String password);
  Future<void> logout();
- Future<void> clearUser();
+ Future<void> clearUser(); // for testing purpose only
 }

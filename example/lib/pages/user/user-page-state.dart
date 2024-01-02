@@ -98,7 +98,8 @@ class UserPageState extends WidgetStateBase<UserPage>
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-    if(pickedFile!=null) {
+    if(pickedFile!=null) 
+    {
         this._user.changeDp(File(pickedFile.path));
         this.displayPicture=File(pickedFile.path);
     }

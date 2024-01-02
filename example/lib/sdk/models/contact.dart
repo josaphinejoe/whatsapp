@@ -4,12 +4,13 @@ import 'package:json_annotation/json_annotation.dart';
 part 'contact.g.dart';
 
 @JsonSerializable()
-class Contact {
+class Contact 
+{
   String firstName;
   String? lastName;
   String phone;
   String? displayPicture;
-  List<MessageInfo> chatList =[];
+  List<MessageInfo> chats =[];
 
 
   Contact({
@@ -19,7 +20,6 @@ class Contact {
     this.displayPicture
   });
 
-//for serialize and deserialize
   factory Contact.fromJson(Map<String,dynamic> json)=> _$ContactFromJson(json);
   Map<String,dynamic> toJson() => _$ContactToJson(this);
 }
