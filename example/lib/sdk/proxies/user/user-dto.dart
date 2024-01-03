@@ -3,25 +3,21 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'user-dto.g.dart';
 
-
 @JsonSerializable()
-class UserDto
-{
+class UserDto {
   String firstName;
   String? lastName;
 
   @FileConverter()
-  File? displayPicture;
+  File? profilePicture;
 
   final String phone;
 
+  UserDto(this.firstName, this.lastName, this.profilePicture, this.phone);
 
-  UserDto(this.firstName,this.lastName,this.displayPicture,this.phone);
-
-  factory UserDto.fromJson(Map<String,dynamic> json) => _$UserDtoFromJson(json);
-  Map<String, dynamic> toJson()=> _$UserDtoToJson(this);
+  factory UserDto.fromJson(Map<String, dynamic> json) => _$UserDtoFromJson(json);
+  Map<String, dynamic> toJson() => _$UserDtoToJson(this);
 }
-
 
 class FileConverter implements JsonConverter<File?, String?> {
   const FileConverter();

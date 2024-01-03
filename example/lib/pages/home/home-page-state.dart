@@ -7,26 +7,19 @@ import 'package:example/services/bottom-nav-manager.dart';
 import 'package:floater/floater.dart';
 import 'package:flutter/material.dart';
 
-
-class HomePageState extends WidgetStateBase<HomePage> 
-{
+class HomePageState extends WidgetStateBase<HomePage> {
   final _bottomNavManager = ServiceLocator.instance.resolve<BottomNavManager>();
   final _userService = ServiceLocator.instance.resolve<UserService>();
   final _eventAggregator = ServiceLocator.instance.resolve<EventAggregator>();
   final _navigator = NavigationService.instance.retrieveNavigator("/");
 
-
-  late final GlobalKey<ScopedNavigatorState> nav0Key =
-      this._bottomNavManager.nav0Key;
-  late final GlobalKey<ScopedNavigatorState> nav1Key =
-      this._bottomNavManager.nav1Key;
-  late final GlobalKey<ScopedNavigatorState> nav2Key =
-      this._bottomNavManager.nav2Key;
+  late final GlobalKey<ScopedNavigatorState> nav0Key = this._bottomNavManager.nav0Key;
+  late final GlobalKey<ScopedNavigatorState> nav1Key = this._bottomNavManager.nav1Key;
+  late final GlobalKey<ScopedNavigatorState> nav2Key = this._bottomNavManager.nav2Key;
 
   late User _user;
-  bool _isReady=false;
-  final List<String> _appBarTitles =["WhatsApp","Select Contact","New Contact"];
-
+  bool _isReady = false;
+  final List<String> _appBarTitles = ["WhatsApp", "Select Contact", "New Contact"];
 
   bool get isReady => this._isReady;
 
@@ -34,35 +27,27 @@ class HomePageState extends WidgetStateBase<HomePage>
   List<String> get appBarTitles => this._appBarTitles;
   NavigatorState get currentNavigator => this._bottomNavManager.navigatorState;
 
-
-  HomePageState() : super() 
-  {
-   this.onInitState(() async
-   {
+  HomePageState() : super() {
+    this.onInitState(() async {
       await this._loadUser();
-      this._isReady=true;
+      this._isReady = true;
       this.triggerStateChange();
     });
-    this.watch<UserUpdatedEvent>(this._eventAggregator.subscribe<UserUpdatedEvent>(),(event)
-    {
-      this._user=event.user;
+    this.watch<UserUpdatedEvent>(this._eventAggregator.subscribe<UserUpdatedEvent>(), (event) {
+      this._user = event.user;
     });
   }
 
-
-  ImageProvider<Object> getImage()
-    {
-      if(this._user.displayPicture !=null){
-        return FileImage(this._user.displayPicture!);
-      }
-      else{
-        return const NetworkImage("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgPp7AelDxUJQ_t928VVlyIqM4sAMLIOsHyWkVgVRPzvFaUuJkNZG6U7DV8oYjIwpwzVKWwEGOFqQ_8jBTwiz8iDrR0GlQUVom65RMzoaLrYvNhVbwcFdgo2glP2lgp076Dvl6oNjrOuQp5oQstI1SCbVXITSPofI12AdM-KaB0rQBPAyRR5qpE-z8hDg/s16000-rw/blank-profile-picture-hd-images-photo-5.JPG");
-      }
+  ImageProvider<Object> getImage() {
+    if (this._user.profilePicture != null) {
+      return FileImage(this._user.profilePicture!);
+    } else {
+      return const NetworkImage(
+          "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgPp7AelDxUJQ_t928VVlyIqM4sAMLIOsHyWkVgVRPzvFaUuJkNZG6U7DV8oYjIwpwzVKWwEGOFqQ_8jBTwiz8iDrR0GlQUVom65RMzoaLrYvNhVbwcFdgo2glP2lgp076Dvl6oNjrOuQp5oQstI1SCbVXITSPofI12AdM-KaB0rQBPAyRR5qpE-z8hDg/s16000-rw/blank-profile-picture-hd-images-photo-5.JPG");
     }
+  }
 
-
-  void onActiveNavItemChanged(int index) 
-  {
+  void onActiveNavItemChanged(int index) {
     this._bottomNavManager.onNavSelected(index);
     this.triggerStateChange();
   }
@@ -71,21 +56,14 @@ class HomePageState extends WidgetStateBase<HomePage>
     this._navigator.pushNamed(Routes.user);
   }
 
-
-  Future<void> _loadUser() async 
-  {
+  Future<void> _loadUser() async {
     this.showLoading();
-    try 
-      {
-        this._user = await this._userService.getUser();
-      } 
-      catch (e) 
-      {
-        return;
-      } 
-      finally 
-      {
-        this.hideLoading();
-      }
+    try {
+      this._user = await this._userService.getAuthenticatedUser();
+    } catch (e) {
+      return;
+    } finally {
+      this.hideLoading();
     }
+  }
 }

@@ -10,9 +10,8 @@ Chat _$ChatFromJson(Map<String, dynamic> json) => Chat(
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String?,
       phone: json['phone'] as String,
-      messageInfo:
-          MessageInfo.fromJson(json['messageInfo'] as Map<String, dynamic>),
-      displayPicture: json['displayPicture'] as String?,
+      messageInfo: MessageInfo.fromJson(json['messageInfo'] as Map<String, dynamic>),
+      profilePicture: json['displayPicture'] as String?,
     );
 
 Map<String, dynamic> _$ChatToJson(Chat instance) => <String, dynamic>{
@@ -20,5 +19,5 @@ Map<String, dynamic> _$ChatToJson(Chat instance) => <String, dynamic>{
       'lastName': instance.lastName,
       'phone': instance.phone,
       'messageInfo': instance.messageInfo,
-      'displayPicture': instance.displayPicture,
+      'displayPicture': instance.profilePicture,
     };

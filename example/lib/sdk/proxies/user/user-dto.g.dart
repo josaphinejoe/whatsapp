@@ -16,6 +16,6 @@ UserDto _$UserDtoFromJson(Map<String, dynamic> json) => UserDto(
 Map<String, dynamic> _$UserDtoToJson(UserDto instance) => <String, dynamic>{
       'firstName': instance.firstName,
       'lastName': instance.lastName,
-      'displayPicture': const FileConverter().toJson(instance.displayPicture),
+      'displayPicture': const FileConverter().toJson(instance.profilePicture),
       'phone': instance.phone,
     };

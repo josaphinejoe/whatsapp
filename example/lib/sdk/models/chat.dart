@@ -4,18 +4,16 @@ import 'package:json_annotation/json_annotation.dart';
 part 'chat.g.dart';
 
 @JsonSerializable()
-class Chat
-{
-    String firstName;
-    String? lastName;
-    String phone;
-    MessageInfo messageInfo;
-    String?displayPicture;
+class Chat {
+  String firstName;
+  String? lastName;
+  String phone;
+  MessageInfo messageInfo;
+  String? profilePicture;
 
-    Chat({required this.firstName,this.lastName,required this.phone,required this.messageInfo, this.displayPicture});
+  Chat({required this.firstName, this.lastName, required this.phone, required this.messageInfo, this.profilePicture});
 
-    
-    factory Chat.fromJson(Map<String,dynamic> json) => _$ChatFromJson(json);
+  factory Chat.fromJson(Map<String, dynamic> json) => _$ChatFromJson(json);
 
-    Map<String,dynamic> toJson()=> _$ChatToJson(this); 
+  Map<String, dynamic> toJson() => _$ChatToJson(this);
 }

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class ThemeProvider
-{
+class ThemeProvider {
   final FlutterSecureStorage _themeStorage = FlutterSecureStorage();
-  final _storageKey ="theme";
+  final _storageKey = "theme";
 
   final ThemeData _lightTheme = ThemeData(
     primaryColor: const Color(0xFF387463),
@@ -20,49 +19,32 @@ class ThemeProvider
 
   bool _isDarkMode = false;
 
-
   bool get isDarkMode => _isDarkMode;
   ThemeData get currentTheme => _isDarkMode ? _darkTheme : _lightTheme;
-  
+
   ValueNotifier<bool> get themeNotifier => _themeNotifier;
 
-
-  ThemeProvider._privateConstructor()
-  {
+  ThemeProvider() {
     this._LoadThemeFromStorage();
-  } 
-
-
-  static final ThemeProvider _instance = ThemeProvider._privateConstructor();
-
-  factory ThemeProvider()
-  {
-    return _instance;
   }
 
-
-  void toggleTheme()
-  {
-    _isDarkMode= !_isDarkMode;
-    this._themeNotifier.value= this._isDarkMode;
+  void toggleTheme() {
+    _isDarkMode = !_isDarkMode;
+    this._themeNotifier.value = this._isDarkMode;
     this._updateThemeInStorage();
   }
 
-  Future<void> _updateThemeInStorage() async
-  {
+  Future<void> _updateThemeInStorage() async {
     await _themeStorage.write(key: this._storageKey, value: this._isDarkMode.toString());
   }
 
-  Future<void> _LoadThemeFromStorage() async 
-  {
+  Future<void> _LoadThemeFromStorage() async {
     final String? storedValue = await this._themeStorage.read(key: this._storageKey);
-    if(storedValue !=null)
-    {
+    if (storedValue != null) {
       // ignore: sdk_version_since
-      this._isDarkMode=bool.parse(storedValue, caseSensitive: false);
-      this._themeNotifier.value= this._isDarkMode;
-    }
-    else
+      this._isDarkMode = bool.parse(storedValue, caseSensitive: false);
+      this._themeNotifier.value = this._isDarkMode;
+    } else
       await this._updateThemeInStorage();
   }
 }
