@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:example/pages/routes.dart';
 import 'package:example/pages/user/user-page.dart';
 import 'package:example/sdk/proxies/user/user.dart';
+import 'package:example/sdk/services/file-service/file-service.dart';
 import 'package:example/sdk/services/user-service/user-service.dart';
 import 'package:floater/floater.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 
 class UserPageState extends WidgetStateBase<UserPage> {
   final _userService = ServiceLocator.instance.resolve<UserService>();
+  final _fileService = ServiceLocator.instance.resolve<FileService>();
   final _navigator = NavigationService.instance.retrieveNavigator("/");
 
   late User _user;
@@ -40,8 +42,8 @@ class UserPageState extends WidgetStateBase<UserPage> {
   set isLastNameEditable(bool val) => (this.._isLastNameEditable = val).triggerStateChange();
 
   UserPageState() : super() {
-    this.onInitState(() async {
-      this._user = await this._userService.getAuthenticatedUser();
+    this.onInitState(() {
+      this._user = this._userService.authenticatedUser;
       this._firstName = this._user.firstName;
       this._lastName = this._user.lastName;
       this._profilePicture = this._user.profilePicture;
@@ -50,7 +52,7 @@ class UserPageState extends WidgetStateBase<UserPage> {
     });
   }
 
-  void saveFirstName() async {
+  Future<void> saveFirstName() async {
     if (this._firstName.isEmptyOrWhiteSpace) return;
     try {
       await this._user.changeName(this.firstName, this._user.lastName);
@@ -60,11 +62,11 @@ class UserPageState extends WidgetStateBase<UserPage> {
     }
   }
 
-  void saveLastName() async {
+  Future<void> saveLastName() async {
     if (this.lastName != null && this.lastName!.isEmptyOrWhiteSpace) this.lastName = null;
 
     try {
-      this._user.changeName(this._user.firstName, this.lastName);
+      await this._user.changeName(this._user.firstName, this.lastName);
       this.triggerStateChange();
     } catch (e) {
       debugPrint(e.toString());
@@ -80,8 +82,10 @@ class UserPageState extends WidgetStateBase<UserPage> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      this._user.changeProfilePicture(File(pickedFile.path));
-      this.profilePicture = File(pickedFile.path);
+      final permanentFile =
+          await this._fileService.moveFileToPermanentLocation(File(pickedFile.path), "profilePicture");
+      this._profilePicture = permanentFile;
+      await this._user.changeProfilePicture(permanentFile);
     }
   }
 

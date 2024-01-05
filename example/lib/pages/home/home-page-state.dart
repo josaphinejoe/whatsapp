@@ -18,19 +18,15 @@ class HomePageState extends WidgetStateBase<HomePage> {
   late final GlobalKey<ScopedNavigatorState> nav2Key = this._bottomNavManager.nav2Key;
 
   late User _user;
-  bool _isReady = false;
   final List<String> _appBarTitles = ["WhatsApp", "Select Contact", "New Contact"];
-
-  bool get isReady => this._isReady;
 
   int get activeNavItem => this._bottomNavManager.currentSelectedNavItem;
   List<String> get appBarTitles => this._appBarTitles;
   NavigatorState get currentNavigator => this._bottomNavManager.navigatorState;
 
   HomePageState() : super() {
-    this.onInitState(() async {
-      await this._loadUser();
-      this._isReady = true;
+    this.onInitState(() {
+      this._user = this._userService.authenticatedUser;
       this.triggerStateChange();
     });
     this.watch<UserUpdatedEvent>(this._eventAggregator.subscribe<UserUpdatedEvent>(), (event) {
@@ -52,18 +48,7 @@ class HomePageState extends WidgetStateBase<HomePage> {
     this.triggerStateChange();
   }
 
-  Future<void> onTapUser() async {
+  void onTapUser() {
     this._navigator.pushNamed(Routes.user);
-  }
-
-  Future<void> _loadUser() async {
-    this.showLoading();
-    try {
-      this._user = await this._userService.getAuthenticatedUser();
-    } catch (e) {
-      return;
-    } finally {
-      this.hideLoading();
-    }
   }
 }

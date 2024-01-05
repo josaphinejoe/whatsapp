@@ -1,5 +1,6 @@
 import 'package:example/sdk/services/user-service/user-service.dart';
 import 'package:floater/floater.dart';
+import 'package:flutter/material.dart';
 import 'splash-page.dart';
 import 'package:example/pages/routes.dart';
 
@@ -14,18 +15,18 @@ class SplashPageState extends WidgetStateBase<SplashPage> {
   }
 
   Future<void> _pauseAndGo() async {
-    bool isAuthenticated = false;
-
-    final isUserExist = await this._userService.isUserExist();
-    if (isUserExist) isAuthenticated = await this._userService.isAuthenticated();
-
     await Future.delayed(Duration(seconds: 2));
 
-    if (isUserExist && isAuthenticated)
-      this._navigator.pushReplacementNamed(Routes.home);
-    else if (isUserExist)
-      this._navigator.pushReplacementNamed(Routes.login);
-    else
-      this._navigator.pushReplacementNamed(Routes.signUp);
+    try {
+      await this._userService.loadUserStorage();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+
+    if (this._userService.isAuthenticated) {
+      await this._navigator.pushReplacementNamed(Routes.home);
+    } else {
+      await this._navigator.pushReplacementNamed(Routes.login);
+    }
   }
 }

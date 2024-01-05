@@ -12,16 +12,18 @@ class SplashPage extends StatefulWidgetBase<SplashPageState> {
           children: <Widget>[
             Expanded(
               child: Center(
-                child: FlutterLogo(
-                  size: 200,
+                child: Image.network(
+                  "https://image.similarpng.com/very-thumbnail/2020/04/WhatsApp-logo-modern-paint-splash-social-media-png.png",
+                  height: double.infinity,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
             Text(
-              "Floater Example",
-              style: Theme.of(context).textTheme.headline6,
+              "WhatsApp",
+              style: Theme.of(context).textTheme.headlineLarge,
             ),
-            SizedBox(height: 16)
+            SizedBox(height: 16),
           ],
         ),
       ),

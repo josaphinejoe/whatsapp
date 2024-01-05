@@ -1,13 +1,13 @@
-import 'package:example/sdk/proxies/user/user-dto.dart';
 import 'package:example/sdk/proxies/user/user.dart';
 
 abstract class UserService {
+  User get authenticatedUser;
+  bool get isAuthenticated;
+
   Future<void> createUser(String firstName, String? lastName, String phone, String password);
-  Future<User> getAuthenticatedUser();
-  Future<void> updateUser(UserDto user);
-  Future<bool> isUserExist();
-  Future<bool> isAuthenticated();
+
   Future<User> authenticate(String phone, String password);
+  Future<void> updateStorage();
   Future<void> logout();
-  Future<void> clearUser(); // for testing purpose only
+  Future<void> loadUserStorage();
 }

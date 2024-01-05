@@ -39,12 +39,13 @@ class ThemeProvider {
   }
 
   Future<void> _LoadThemeFromStorage() async {
-    final String? storedValue = await this._themeStorage.read(key: this._storageKey);
+    final storedValue = await this._themeStorage.read(key: this._storageKey);
     if (storedValue != null) {
       // ignore: sdk_version_since
       this._isDarkMode = bool.parse(storedValue, caseSensitive: false);
       this._themeNotifier.value = this._isDarkMode;
-    } else
+    } else {
       await this._updateThemeInStorage();
+    }
   }
 }

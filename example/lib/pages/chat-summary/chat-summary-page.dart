@@ -1,5 +1,4 @@
 import 'package:example/pages/chat-summary/chat-summary-page-state.dart';
-import 'package:example/sdk/models/chat.dart';
 import 'package:floater/floater.dart';
 import 'package:flutter/material.dart';
 
@@ -14,13 +13,19 @@ class ChatSummaryPage extends StatefulWidgetBase<ChatSummaryPageState> {
         child: ListView.builder(
           itemCount: this.state.chatList.length,
           itemBuilder: (ctx, index) {
-            Chat chat = this.state.chatList[index];
+            final chat = this.state.chatList[index];
             return Padding(
-              padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+              padding: const EdgeInsets.only(
+                top: 10.0,
+                bottom: 10.0,
+              ),
               child: ListTile(
                 title: Text(
                   '${chat.firstName} ${chat.lastName ?? ""}',
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 onTap: () => this.state.onTapChat(chat),
                 subtitle: Text(

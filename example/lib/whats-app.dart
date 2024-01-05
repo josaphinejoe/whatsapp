@@ -8,9 +8,10 @@ class WhatsApp extends StatelessWidgetBase {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-        valueListenable: themeProvider.themeNotifier,
-        builder: (context, isDarkMode, child) {
-          return MaterialApp(home: Shell(), theme: themeProvider.currentTheme);
-        });
+      valueListenable: themeProvider.themeNotifier,
+      builder: (context, isDarkMode, child) {
+        return MaterialApp(home: Shell(), theme: themeProvider.currentTheme);
+      },
+    );
   }
 }

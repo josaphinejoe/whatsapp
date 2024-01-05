@@ -1,89 +1,86 @@
 import 'package:example/pages/sign-up/sign-up-page-state.dart';
+import 'package:example/widgets/whatsapp-text-field/whatsapp-text-field.dart';
 import 'package:floater/floater.dart';
 import 'package:flutter/material.dart';
 
-class SignUpPage extends StatefulWidgetBase<SignUpPageState>{
-  
-  SignUpPage(): super(() => SignUpPageState());
-
+class SignUpPage extends StatefulWidgetBase<SignUpPageState> {
+  SignUpPage() : super(() => SignUpPageState());
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:Text("Sign Up",style: const TextStyle(color: Colors.white,fontSize: 25),),
+        title: Text(
+          "Sign Up",
+          style: const TextStyle(color: Colors.white, fontSize: 25),
+        ),
         backgroundColor: Theme.of(context).primaryColor,
+        foregroundColor: Colors.white,
         centerTitle: false,
       ),
-      body:Padding(
+      body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: this.state.formKey,
-          child: ListView(
-            children: [
-              const SizedBox(height: 30.0),
-              TextFormField(
-                controller: this.state.firstNameController,
-                onChanged: (v)=>this.state.firstName=v,
-                textCapitalization: TextCapitalization.words,
-                decoration: InputDecoration(
-                  labelText: "First Name",
-                  prefixIcon:  Icon(Icons.person),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12))
-                  ),
-                  errorText: this.state.errors.getError("firstName"),
-                ),
+        child: ListView(
+          children: [
+            const SizedBox(
+              height: 30.0,
+            ),
+            WhatsappTextField(
+              label: "First Name",
+              onChange: (v) => this.state.firstName = v,
+              errorMessage: this.state.errors.getError("firstName"),
+            ),
+            const SizedBox(
+              height: 16.0,
+            ),
+            WhatsappTextField(
+              label: "Last Name",
+              onChange: (v) => this.state.lastName = v,
+              errorMessage: this.state.errors.getError("lastName"),
+            ),
+            const SizedBox(
+              height: 16.0,
+            ),
+            WhatsappTextField(
+              label: "Phone Number",
+              onChange: (v) => this.state.phone = v,
+              errorMessage: this.state.errors.getError("phone"),
+              isNumbersOnly: true,
+            ),
+            const SizedBox(
+              height: 16.0,
+            ),
+            WhatsappTextField(
+              label: "Password",
+              onChange: (v) => this.state.password = v,
+              errorMessage: this.state.errors.getError("password"),
+              isPassword: true,
+              maxLength: 50,
+            ),
+            const SizedBox(
+              height: 50.0,
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.green[500]),
+              onPressed: this.state.hasErrors ? null : this.state.signUp,
+              child: const Text(
+                "Sign Up",
+                style: TextStyle(color: Colors.white),
               ),
-              const SizedBox(height: 16.0),
-              TextFormField(
-                controller: this.state.lastNameController,
-                onChanged: (v)=> this.state.lastName=v,
-                textCapitalization: TextCapitalization.words,
-                decoration: InputDecoration(
-                  labelText: "Last Name",
-                  prefixIcon:  Icon(Icons.person),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                  ),
-                  errorText: this.state.errors.getError("lastName"),
-                ),
+            ),
+            const SizedBox(
+              height: 20.0,
+            ),
+            TextButton(
+              onPressed: () => this.state.goToLogin(),
+              child: Text(
+                "Log In",
+                style: TextStyle(fontSize: 20, color: Colors.red),
               ),
-              const SizedBox(height: 16.0),
-              TextFormField(
-                controller: this.state.phoneController,
-                onChanged: (v)=> this.state.phone=v,
-                decoration: InputDecoration(
-                  labelText: "Phone number",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                  ),
-                  errorText: this.state.errors.getError("phone"),
-                  prefixIcon:  Icon(Icons.phone)),
-                  keyboardType: TextInputType.phone,
-              ),
-              const SizedBox(height: 16.0),
-              TextFormField(
-                controller: this.state.passwordController,
-                obscureText: true,
-                onChanged: (v)=> this.state.password=v,
-                decoration: InputDecoration(
-                  labelText: "Password",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                  ),
-                  errorText: this.state.errors.getError("password"),
-                  prefixIcon:  Icon(Icons.remove_red_eye)),
-              ),
-              const SizedBox(height: 50.0,),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.green[500]),
-               onPressed: this.state.hasErrors ? null : this.state.signUp,
-               child: const Text("Sign Up", style: TextStyle(color: Colors.white),))
-            ],
-          ),
+            ),
+          ],
+        ),
       ),
-      ),
-    ) ;
+    );
   }
 }

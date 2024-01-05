@@ -12,12 +12,13 @@ class BottomNavManager {
   GlobalKey<ScopedNavigatorState>? currentNav;
 
   NavigatorState get navigatorState {
-    if (currentSelectedNavItem == 0)
+    if (currentSelectedNavItem == 0) {
       return this.nav0Key.currentState!.navigator!;
-    else if (currentSelectedNavItem == 1)
+    } else if (currentSelectedNavItem == 1) {
       return this.nav1Key.currentState!.navigator!;
-    else
+    } else {
       return this.nav2Key.currentState!.navigator!;
+    }
   }
 
   void onNavSelected(int index) {

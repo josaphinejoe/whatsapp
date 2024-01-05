@@ -11,7 +11,6 @@ class UserCredentials {
 
   UserCredentials(this.user, this.password, this.isAuthenticated);
 
-
   factory UserCredentials.fromJson(Map<String, dynamic> json) => _$UserCredentialsFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserCredentialsToJson(this);

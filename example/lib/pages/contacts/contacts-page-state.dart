@@ -1,62 +1,41 @@
 import 'package:example/events/contact-added-event.dart';
 import 'package:example/pages/contacts/contacts-page.dart';
 import 'package:example/pages/routes.dart';
-import 'package:example/sdk/models/contact.dart';
-import 'package:example/sdk/services/contacts-service/contacts-service.dart';
+import 'package:example/sdk/proxies/contact/contact.dart';
+import 'package:example/sdk/services/user-service/user-service.dart';
 import 'package:floater/floater.dart';
 
-class ContactsPageState extends WidgetStateBase<ContactsPage>
-{
-  final _contactService = ServiceLocator.instance.resolve<ContactService>();
+class ContactsPageState extends WidgetStateBase<ContactsPage> {
+  final _userService = ServiceLocator.instance.resolve<UserService>();
   final _navigator = NavigationService.instance.retrieveNavigator("/");
   final _eventAggregator = ServiceLocator.instance.resolve<EventAggregator>();
 
-
-  late List<Contact> _contacts =[];
-
+  late List<Contact> _contacts = [];
 
   List<Contact> get contacts => this._contacts;
 
-
-  ContactsPageState() :super()
-  {
-    this.onInitState(() async 
-    {
-      await this._loadContacts();
+  ContactsPageState() : super() {
+    this.onInitState(() {
+      this._loadContacts();
     });
 
-    this.watch<ContactAddedEvent>(this._eventAggregator.subscribe<ContactAddedEvent>(),(event) async
-    {
-      await this._loadContacts();
+    this.watch<ContactAddedEvent>(this._eventAggregator.subscribe<ContactAddedEvent>(), (event) {
+      this._loadContacts();
     });
   }
 
-
-  Future<void> onTapChat(Contact contact) async 
-  {
-    this._navigator.pushNamed(
-      NavigationService.instance.generateRoute(Routes.chats),arguments:{
-        "phone":contact.phone
+  Future<void> onTapChat(Contact contact) async {
+    await this._navigator.pushNamed(
+      NavigationService.instance.generateRoute(Routes.chats),
+      arguments: {
+        "phone": contact.phone,
       },
     );
   }
 
-
-  Future<void> _loadContacts() async 
-  {
-    this.showLoading();
-      try 
-      {
-        this._contacts = await this._contactService.getContactList();
-        this._contacts.sort((a, b) => a.firstName.compareTo(b.firstName)); 
-      } 
-      catch (e) 
-      {
-        return;
-      } 
-      finally 
-      {
-        this.hideLoading();
-      }
-    }
+  void _loadContacts() {
+    final user = this._userService.authenticatedUser;
+    this._contacts = user.contactList;
+    this._contacts.sort((a, b) => a.firstName.compareTo(b.firstName));
+  }
 }

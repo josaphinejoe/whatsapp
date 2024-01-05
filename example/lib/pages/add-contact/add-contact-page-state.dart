@@ -47,7 +47,7 @@ class AddContactPageState extends WidgetStateBase<AddContactPage> {
 
     this.showLoading();
     try {
-      final user = await this._userService.getAuthenticatedUser();
+      final user = this._userService.authenticatedUser;
       await user.addContact(this.firstName, this.phone, this.lastName);
     } catch (e) {
       debugPrint(e.toString());

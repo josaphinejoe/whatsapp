@@ -24,8 +24,8 @@ class SettingsPageState extends WidgetStateBase<SettingsPage> {
   String get userName => this._user.firstName;
 
   SettingsPageState() : super() {
-    this.onInitState(() async {
-      await this._loadUser();
+    this.onInitState(() {
+      this._loadUser();
       this._isReady = true;
       this.triggerStateChange();
     });
@@ -40,12 +40,12 @@ class SettingsPageState extends WidgetStateBase<SettingsPage> {
     this.triggerStateChange();
   }
 
-  void logout() async {
+  Future<void> logout() async {
     this.showLoading();
     try {
       await this._userService.logout();
       this._navigator.popUntil((route) => route.isFirst);
-      this._navigator.pushReplacementNamed(Routes.login);
+      await this._navigator.pushReplacementNamed(Routes.login);
     } catch (e) {
       debugPrint(e.toString());
       return;
@@ -54,10 +54,10 @@ class SettingsPageState extends WidgetStateBase<SettingsPage> {
     }
   }
 
-  Future<void> _loadUser() async {
+  void _loadUser() {
     this.showLoading();
     try {
-      this._user = await this._userService.getAuthenticatedUser();
+      this._user = this._userService.authenticatedUser;
     } catch (e) {
       return;
     } finally {

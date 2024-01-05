@@ -18,14 +18,15 @@ abstract class Routes {
   static const contacts = "$home/contacts";
   static const addContact = "$home/addContact";
   static const chats = "/chats?{phone: string}";
+
+  //TODO: make user scope navigator
+
   static const user = "/user";
   static const settings = "/settings";
   static const signUp = "/signUp";
   static const login = "/login";
 
-  
   static void initializeNavigation() {
-    
     NavigationManager.instance
       ..registerPage(Routes.splash, (routeArgs) => SplashPage())
       ..registerPage(Routes.home, (routeArgs) => HomePage())
@@ -37,7 +38,7 @@ abstract class Routes {
       ..registerPage(Routes.settings, (routeArgs) => SettingsPage())
       ..registerPage(Routes.signUp, (routeArgs) => SignUpPage())
       ..registerPage(Routes.login, (routeArgs) => LoginPage());
-   
+
     NavigationManager.instance.bootstrap();
   }
 }
