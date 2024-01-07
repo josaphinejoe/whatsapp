@@ -28,8 +28,8 @@ class ThemeProvider {
     this._LoadThemeFromStorage();
   }
 
-  void toggleTheme() {
-    _isDarkMode = !_isDarkMode;
+  void toggleTheme(bool val) {
+    _isDarkMode = val;
     this._themeNotifier.value = this._isDarkMode;
     this._updateThemeInStorage();
   }

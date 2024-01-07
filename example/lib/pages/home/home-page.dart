@@ -75,7 +75,7 @@ class _HomeAppBar extends StatelessWidgetBase implements PreferredSizeWidget {
   final ImageProvider<Object> displayPicture;
   final List<String> titles;
   final int activeNavItem;
-  final void onTapUser;
+  final VoidCallback onTapUser;
   const _HomeAppBar({
     required this.titles,
     required this.activeNavItem,
@@ -102,7 +102,7 @@ class _HomeAppBar extends StatelessWidgetBase implements PreferredSizeWidget {
           child: Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: InkWell(
-              onTap: () => this.onTapUser,
+              onTap: this.onTapUser,
               borderRadius: BorderRadius.circular(50.0),
               child: CircleAvatar(
                 backgroundColor: const Color(0xFF387463),

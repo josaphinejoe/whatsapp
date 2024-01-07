@@ -9,15 +9,7 @@ class LoginPage extends StatefulWidgetBase<LoginPageState> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Log In",
-          style: const TextStyle(color: Colors.white, fontSize: 25),
-        ),
-        backgroundColor: Theme.of(context).primaryColor,
-        foregroundColor: Colors.white,
-        centerTitle: false,
-      ),
+      appBar: _loginAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
@@ -56,13 +48,9 @@ class LoginPage extends StatefulWidgetBase<LoginPageState> {
             const SizedBox(
               height: 40.0,
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.green[500]),
-              onPressed: this.state.hasErrors ? null : this.state.login,
-              child: const Text(
-                "Log In",
-                style: TextStyle(color: Colors.white),
-              ),
+            _loginButton(
+              hasErrors: this.state.hasErrors,
+              login: this.state.login,
             ),
             const SizedBox(
               height: 20.0,
@@ -79,4 +67,49 @@ class LoginPage extends StatefulWidgetBase<LoginPageState> {
       ),
     );
   }
+}
+
+class _loginButton extends StatelessWidget {
+  const _loginButton({
+    required this.hasErrors,
+    required this.login,
+    Key? key,
+  }) : super(key: key);
+
+  final bool hasErrors;
+  final VoidCallback login;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(backgroundColor: Colors.green[500]),
+      onPressed: this.hasErrors ? null : this.login,
+      child: const Text(
+        "Log In",
+        style: TextStyle(color: Colors.white),
+      ),
+    );
+  }
+}
+
+class _loginAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _loginAppBar({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text(
+        "Log In",
+        style: const TextStyle(color: Colors.white, fontSize: 25),
+      ),
+      backgroundColor: Theme.of(context).primaryColor,
+      foregroundColor: Colors.white,
+      centerTitle: false,
+    );
+  }
+
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }

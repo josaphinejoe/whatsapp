@@ -6,27 +6,20 @@ import 'package:flutter/material.dart';
 class AddContactPageState extends WidgetStateBase<AddContactPage> {
   final _userService = ServiceLocator.instance.resolve<UserService>();
 
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _firstNameController = TextEditingController();
-  TextEditingController _lastNameController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-
   late Validator<AddContactPageState> _validator;
 
-  TextEditingController get firstNameController => this._firstNameController;
-  TextEditingController get lastNameController => this._lastNameController;
-  TextEditingController get phoneController => this._phoneController;
+  String _firstName = "";
+  String _lastName = "";
+  String _phone = "";
 
-  String get firstName => this._firstNameController.text;
-  set firstName(String value) => (this.._firstNameController.text = value).triggerStateChange();
+  String get firstName => this._firstName;
+  set firstName(String value) => (this.._firstName = value).triggerStateChange();
 
-  String? get lastName => this._lastNameController.text;
-  set lastName(String? value) => (this.._lastNameController.text = value ?? "").triggerStateChange();
+  String? get lastName => this._lastName;
+  set lastName(String? value) => (this.._lastName = value ?? "").triggerStateChange();
 
-  String get phone => this._phoneController.text;
-  set phone(String value) => (this.._phoneController.text = value).triggerStateChange();
-
-  GlobalKey<FormState> get formKey => this._formKey;
+  String get phone => this._phone;
+  set phone(String value) => (this.._phone = value).triggerStateChange();
 
   bool get hasErrors => this._validator.hasErrors;
   ValidationErrors get errors => this._validator.errors;
@@ -38,7 +31,7 @@ class AddContactPageState extends WidgetStateBase<AddContactPage> {
     });
   }
 
-  void save() async {
+  Future<void> save() async {
     this._validator.enable();
     if (!this._validate()) {
       this.triggerStateChange();
@@ -59,11 +52,11 @@ class AddContactPageState extends WidgetStateBase<AddContactPage> {
   }
 
   void _reset() {
-    this._firstNameController.clear();
-    this._lastNameController.clear();
-    this._phoneController.clear();
-    this._formKey.currentState?.reassemble();
-    this._formKey = GlobalKey<FormState>();
+    this._firstName = "";
+    this._lastName = "";
+    this._phone = "";
+    this._validator.disable();
+    this.triggerStateChange();
   }
 
   bool _validate() {

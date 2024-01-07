@@ -11,11 +11,7 @@ class SettingsPageState extends WidgetStateBase<SettingsPage> {
   final _userService = ServiceLocator.instance.resolve<UserService>();
   final _themeProvider = ServiceLocator.instance.resolve<ThemeProvider>();
 
-  bool _isReady = false;
   late User _user;
-
-  bool get isReady => this._isReady;
-  set isReady(bool value) => (this.._isReady = value).triggerStateChange();
 
   ValueNotifier<bool> get themeNotifier => _themeProvider.themeNotifier;
 
@@ -24,19 +20,15 @@ class SettingsPageState extends WidgetStateBase<SettingsPage> {
   String get userName => this._user.firstName;
 
   SettingsPageState() : super() {
-    this.onInitState(() {
-      this._loadUser();
-      this._isReady = true;
-      this.triggerStateChange();
-    });
+    this._user = this._userService.authenticatedUser;
   }
 
   void goBack() {
     this._navigator.pop();
   }
 
-  void toggleTheme() {
-    this._themeProvider.toggleTheme();
+  void toggleTheme(bool val) {
+    this._themeProvider.toggleTheme(val);
     this.triggerStateChange();
   }
 
@@ -48,17 +40,6 @@ class SettingsPageState extends WidgetStateBase<SettingsPage> {
       await this._navigator.pushReplacementNamed(Routes.login);
     } catch (e) {
       debugPrint(e.toString());
-      return;
-    } finally {
-      this.hideLoading();
-    }
-  }
-
-  void _loadUser() {
-    this.showLoading();
-    try {
-      this._user = this._userService.authenticatedUser;
-    } catch (e) {
       return;
     } finally {
       this.hideLoading();

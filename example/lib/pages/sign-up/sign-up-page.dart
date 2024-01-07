@@ -9,15 +9,7 @@ class SignUpPage extends StatefulWidgetBase<SignUpPageState> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Sign Up",
-          style: const TextStyle(color: Colors.white, fontSize: 25),
-        ),
-        backgroundColor: Theme.of(context).primaryColor,
-        foregroundColor: Colors.white,
-        centerTitle: false,
-      ),
+      appBar: _signUpAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
@@ -60,13 +52,9 @@ class SignUpPage extends StatefulWidgetBase<SignUpPageState> {
             const SizedBox(
               height: 50.0,
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.green[500]),
-              onPressed: this.state.hasErrors ? null : this.state.signUp,
-              child: const Text(
-                "Sign Up",
-                style: TextStyle(color: Colors.white),
-              ),
+            _signUpButton(
+              hasErrors: this.state.hasErrors,
+              signUp: this.state.signUp,
             ),
             const SizedBox(
               height: 20.0,
@@ -83,4 +71,49 @@ class SignUpPage extends StatefulWidgetBase<SignUpPageState> {
       ),
     );
   }
+}
+
+class _signUpButton extends StatelessWidget {
+  const _signUpButton({
+    required this.hasErrors,
+    required this.signUp,
+    Key? key,
+  }) : super(key: key);
+
+  final bool hasErrors;
+  final VoidCallback signUp;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(backgroundColor: Colors.green[500]),
+      onPressed: this.hasErrors ? null : this.signUp,
+      child: const Text(
+        "Sign Up",
+        style: TextStyle(color: Colors.white),
+      ),
+    );
+  }
+}
+
+class _signUpAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _signUpAppBar({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text(
+        "Sign Up",
+        style: const TextStyle(color: Colors.white, fontSize: 25),
+      ),
+      backgroundColor: Theme.of(context).primaryColor,
+      foregroundColor: Colors.white,
+      centerTitle: false,
+    );
+  }
+
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }

@@ -9,19 +9,41 @@ class SplashPage extends StatefulWidgetBase<SplashPageState> {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          children: <Widget>[
+          children: [
             Expanded(
               child: Center(
                 child: Image.network(
-                  "https://image.similarpng.com/very-thumbnail/2020/04/WhatsApp-logo-modern-paint-splash-social-media-png.png",
-                  height: double.infinity,
+                  "https://i.pinimg.com/originals/f3/53/5d/f3535dc3f95e71506f7c80755610176c.png",
+                  height: 100.0,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-            Text(
-              "WhatsApp",
-              style: Theme.of(context).textTheme.headlineLarge,
+            Column(
+              children: [
+                Text(
+                  "from",
+                  style: TextStyle(color: Colors.grey),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(3.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.facebook,
+                      ),
+                      SizedBox(
+                        width: 3.0,
+                      ),
+                      Text(
+                        "Meta",
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 16),
           ],
