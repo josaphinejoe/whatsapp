@@ -16,11 +16,6 @@ class ChatsPageState extends WidgetStateBase<ChatsPage> {
   final String _phone;
   late Contact _contact;
 
-  bool _isReady = false;
-
-  bool get isReady => this._isReady;
-  set isReady(bool value) => (this.._isReady = value).triggerStateChange();
-
   TextEditingController get messageController => this._messageController;
   Contact get contact => this._contact;
   List<MessageInfo> get chats => this._contact.chats.reversed.toList();
@@ -28,8 +23,6 @@ class ChatsPageState extends WidgetStateBase<ChatsPage> {
   ChatsPageState(this._phone) : super() {
     this.onInitState(() {
       this._loadContact();
-      this.triggerStateChange();
-      this.isReady = true;
     });
 
     this.watch<MessageSentEvent>(this._eventAggregator.subscribe<MessageSentEvent>(), (event) {
@@ -94,14 +87,7 @@ class ChatsPageState extends WidgetStateBase<ChatsPage> {
   }
 
   void _loadContact() {
-    this.showLoading();
-    try {
-      final user = this._userService.authenticatedUser;
-      this._contact = user.contactList.firstWhere((element) => element.phone == this._phone);
-    } catch (e) {
-      return;
-    } finally {
-      this.hideLoading();
-    }
+    final user = this._userService.authenticatedUser;
+    this._contact = user.contactList.firstWhere((element) => element.phone == this._phone);
   }
 }

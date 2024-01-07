@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:example/pages/chats/chats-page-state.dart';
 import 'package:example/sdk/models/message-info.dart';
-import 'package:example/widgets/loading_spinner/loading_spinner.dart';
+import 'package:example/sdk/proxies/contact/contact.dart';
 import 'package:floater/floater.dart';
 import 'package:flutter/material.dart';
 
@@ -11,35 +11,20 @@ class ChatsPage extends StatefulWidgetBase<ChatsPageState> {
 
   @override
   Widget build(BuildContext context) {
-    return this.state.isReady
-        ? Scaffold(
-            appBar: AppBar(
-              title: Text(
-                '${this.state.contact.firstName} ${this.state.contact.lastName ?? ''}',
-                style: const TextStyle(color: Colors.white, fontSize: 25),
-              ),
-              backgroundColor: Theme.of(context).primaryColor,
-              centerTitle: false,
-              leading: Row(
-                children: [
-                  IconButton(
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                      ),
-                      onPressed: () => this.state.goBack()),
-                  CircleAvatar(
-                    backgroundColor: Colors.white,
-                    backgroundImage: NetworkImage(this.state.contact.profilePicture ??
-                        "https://cdn4.iconfinder.com/data/icons/business-and-office-29/512/396-_profile__avatar__image__dp_-512.png"),
-                  ),
-                ],
-              ),
-              leadingWidth: 88.0,
+    return Scaffold(
+      appBar: _chatsAppBar(
+        contact: this.state.contact,
+        goBack: this.state.goBack,
+      ),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Image.network(
+              "https://i.pinimg.com/736x/8c/98/99/8c98994518b575bfd8c949e91d20548b.jpg",
+              fit: BoxFit.cover,
+              height: double.infinity,
             ),
-            backgroundColor: const Color.fromARGB(255, 220, 215, 215),
-            body: SafeArea(
-                child: Column(
+            Column(
               children: [
                 Expanded(
                   child: Padding(
@@ -48,121 +33,303 @@ class ChatsPage extends StatefulWidgetBase<ChatsPageState> {
                       reverse: true,
                       itemCount: this.state.chats.length,
                       itemBuilder: (context, index) {
-                        MessageInfo message = this.state.chats[index];
-                        String formattedDate = this.state.getFormattedDate(message.time);
-                        bool isFirstMsgOfDay = this.state.isFirstMsgOfDay(index, formattedDate);
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            if (isFirstMsgOfDay)
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                                child: Text(
-                                  formattedDate,
-                                  style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: message.isMyMsg ? 50.0 : 8.0,
-                                    right: message.isMyMsg ? 8.0 : 50.0,
-                                    top: 8.0,
-                                    bottom: 8.0),
-                                child: Align(
-                                    alignment: message.isMyMsg ? Alignment.centerRight : Alignment.centerLeft,
-                                    child: Container(
-                                      constraints: const BoxConstraints(minWidth: 80.0, maxWidth: 300.0),
-                                      padding: const EdgeInsets.all(12.0),
-                                      decoration: BoxDecoration(
-                                          color:
-                                              message.isMyMsg ? const Color.fromARGB(255, 217, 248, 178) : Colors.white,
-                                          borderRadius: BorderRadius.circular(12.0)),
-                                      child: message.isImage
-                                          ? Stack(
-                                              children: [
-                                                if (message.message.startsWith('http'))
-                                                  Image.network(message.message,
-                                                      width: 250, height: 250, fit: BoxFit.cover)
-                                                else
-                                                  Image.file(
-                                                    File(message.message),
-                                                    width: 250,
-                                                    height: 250,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                Positioned(
-                                                    bottom: 8.0,
-                                                    right: 8.0,
-                                                    child: Text(
-                                                      this.state.getFormattedTime(message.time),
-                                                      style: const TextStyle(color: Colors.grey),
-                                                    ))
-                                              ],
-                                            )
-                                          : IntrinsicWidth(
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                children: [
-                                                  Expanded(
-                                                      child: Text(
-                                                    message.message,
-                                                    style: const TextStyle(color: Colors.black87),
-                                                  )),
-                                                  const SizedBox(width: 8.0),
-                                                  Text(
-                                                    this.state.getFormattedTime(message.time),
-                                                    style: const TextStyle(color: Colors.grey),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                    ))),
-                          ],
+                        final message = this.state.chats[index];
+                        final formattedDate = this.state.getFormattedDate(message.time);
+                        final isFirstMsgOfDay = this.state.isFirstMsgOfDay(index, formattedDate);
+                        return _chat(
+                          isFirstMsgOfDay: isFirstMsgOfDay,
+                          formattedDate: formattedDate,
+                          message: message,
+                          getFormattedTime: this.state.getFormattedTime,
                         );
                       },
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: TextField(
-                        controller: this.state.messageController,
-                        style: TextStyle(color: Colors.black54),
-                        decoration: InputDecoration(
-                            hintStyle: TextStyle(color: Colors.black54),
-                            hintText: "Type your message...",
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(18.0)),
-                            suffixIcon: IconButton(
-                                onPressed: this.state.sendImage, icon: Icon(Icons.image, color: Colors.grey[800]))),
-                      )),
-                      IconButton(
-                          onPressed: () => this.state.handleSendMessage(),
-                          icon: const Icon(
-                            Icons.send,
-                            color: const Color(0xFF387463),
-                          ))
-                    ],
-                  ),
+                _userInput(
+                  handleSendMessage: this.state.handleSendMessage,
+                  messageController: this.state.messageController,
+                  sendImage: this.state.sendImage,
                 ),
               ],
-            )),
-          )
-        : this._buildLoadingScreen();
+            ),
+          ],
+        ),
+      ),
+    );
   }
+}
 
-  Widget _buildLoadingScreen() {
-    return Scaffold(
-      body: Container(
-        child: SizedBox.expand(
-          child: Container(
-            alignment: Alignment.center,
-            child: LoadingSpinner(),
+class _userInput extends StatelessWidget {
+  final VoidCallback handleSendMessage;
+  final TextEditingController messageController;
+  final VoidCallback sendImage;
+
+  const _userInput({
+    required this.handleSendMessage,
+    required this.messageController,
+    required this.sendImage,
+  }) : super();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: this.messageController,
+              style: TextStyle(
+                color: Colors.black54,
+              ),
+              decoration: InputDecoration(
+                hintStyle: TextStyle(
+                  color: Colors.black54,
+                ),
+                hintText: "Type your message...",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                ),
+                suffixIcon: IconButton(
+                  onPressed: this.sendImage,
+                  icon: Icon(
+                    Icons.image,
+                    color: Colors.grey[800],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50.0),
+                color: const Color(0xFF387463),
+              ),
+              child: IconButton(
+                onPressed: () => this.handleSendMessage(),
+                icon: const Icon(
+                  Icons.send,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _chat extends StatelessWidget {
+  const _chat({
+    required this.isFirstMsgOfDay,
+    required this.formattedDate,
+    required this.message,
+    required this.getFormattedTime,
+  }) : super();
+
+  final bool isFirstMsgOfDay;
+  final String formattedDate;
+  final MessageInfo message;
+  final String Function(int) getFormattedTime;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        if (isFirstMsgOfDay)
+          _dayRepresentation(
+            formattedDate: formattedDate,
+          ),
+        Padding(
+          padding: EdgeInsets.all(12.0),
+          child: Align(
+            alignment: message.isMyMsg ? Alignment.bottomRight : Alignment.bottomLeft,
+            child: Container(
+              constraints: const BoxConstraints(
+                minWidth: 80.0,
+                maxWidth: 300.0,
+              ),
+              padding: const EdgeInsets.all(12.0),
+              decoration: BoxDecoration(
+                color: message.isMyMsg ? const Color.fromARGB(255, 217, 248, 178) : Colors.white,
+                borderRadius: message.isMyMsg
+                    ? BorderRadius.only(
+                        topLeft: Radius.circular(12.0),
+                        bottomLeft: Radius.circular(12.0),
+                        bottomRight: Radius.circular(12.0),
+                      )
+                    : BorderRadius.only(
+                        topRight: Radius.circular(12.0),
+                        bottomRight: Radius.circular(12.0),
+                        bottomLeft: Radius.circular(12.0),
+                      ),
+              ),
+              child: message.isImage
+                  ? _imageMessage(
+                      message: message,
+                      getFormattedTime: getFormattedTime,
+                    )
+                  : _textMessage(
+                      message: message,
+                      getFormattedTime: getFormattedTime,
+                    ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _textMessage extends StatelessWidget {
+  const _textMessage({
+    required this.message,
+    required this.getFormattedTime,
+  }) : super();
+
+  final MessageInfo message;
+  final String Function(int p1) getFormattedTime;
+
+  @override
+  Widget build(BuildContext context) {
+    return IntrinsicWidth(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Text(
+              message.message,
+              style: const TextStyle(
+                color: Colors.black87,
+              ),
+            ),
+          ),
+          const SizedBox(width: 8.0),
+          Text(
+            this.getFormattedTime(message.time),
+            style: const TextStyle(color: Colors.grey),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _imageMessage extends StatelessWidget {
+  const _imageMessage({
+    required this.message,
+    required this.getFormattedTime,
+  }) : super();
+
+  final MessageInfo message;
+  final String Function(int p1) getFormattedTime;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        if (message.message.startsWith('http'))
+          Image.network(
+            message.message,
+            width: 250,
+            height: 250,
+            fit: BoxFit.cover,
+          )
+        else
+          Image.file(
+            File(message.message),
+            width: 250,
+            height: 250,
+            fit: BoxFit.cover,
+          ),
+        Positioned(
+          bottom: 8.0,
+          right: 8.0,
+          child: Text(
+            this.getFormattedTime(message.time),
+            style: const TextStyle(color: Colors.grey),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _dayRepresentation extends StatelessWidget {
+  const _dayRepresentation({
+    required this.formattedDate,
+  }) : super();
+
+  final String formattedDate;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: Container(
+        padding: EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.0),
+          color: Colors.white70,
+        ),
+        child: Text(
+          formattedDate,
+          style: const TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
     );
   }
+}
+
+class _chatsAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _chatsAppBar({
+    required this.contact,
+    required this.goBack,
+  }) : super();
+  final Contact contact;
+  final VoidCallback goBack;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text(
+        '${this.contact.firstName} ${this.contact.lastName ?? ''}',
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 25,
+        ),
+      ),
+      backgroundColor: Theme.of(context).primaryColor,
+      centerTitle: false,
+      leading: Row(
+        children: [
+          IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+            onPressed: () => this.goBack(),
+          ),
+          CircleAvatar(
+            backgroundColor: Colors.white,
+            backgroundImage: NetworkImage(
+              this.contact.profilePicture ??
+                  "https://cdn4.iconfinder.com/data/icons/business-and-office-29/512/396-_profile__avatar__image__dp_-512.png",
+            ),
+          ),
+        ],
+      ),
+      leadingWidth: 88.0,
+    );
+  }
+
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
