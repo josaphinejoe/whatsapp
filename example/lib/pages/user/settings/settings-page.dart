@@ -1,4 +1,4 @@
-import 'package:example/pages/settings/settings-page-state.dart';
+import 'package:example/pages/user/settings/settings-page-state.dart';
 import 'package:floater/floater.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

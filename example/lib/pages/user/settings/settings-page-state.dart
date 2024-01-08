@@ -1,5 +1,5 @@
 import 'package:example/pages/routes.dart';
-import 'package:example/pages/settings/settings-page.dart';
+import 'package:example/pages/user/settings/settings-page.dart';
 import 'package:example/sdk/proxies/user/user.dart';
 import 'package:example/sdk/services/user-service/user-service.dart';
 import 'package:example/services/theme-provider.dart';
@@ -10,6 +10,7 @@ class SettingsPageState extends WidgetStateBase<SettingsPage> {
   final _navigator = NavigationService.instance.retrieveNavigator("/");
   final _userService = ServiceLocator.instance.resolve<UserService>();
   final _themeProvider = ServiceLocator.instance.resolve<ThemeProvider>();
+  final _scopedNavigator = NavigationService.instance.retrieveNavigator(Routes.user);
 
   late User _user;
 
@@ -24,7 +25,7 @@ class SettingsPageState extends WidgetStateBase<SettingsPage> {
   }
 
   void goBack() {
-    this._navigator.pop();
+    this._scopedNavigator.pop();
   }
 
   void toggleTheme(bool val) {

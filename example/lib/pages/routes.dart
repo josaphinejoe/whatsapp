@@ -4,8 +4,9 @@ import 'package:example/pages/chats/chats-page.dart';
 import 'package:example/pages/contacts/contacts-page.dart';
 import 'package:example/pages/home/home-page.dart';
 import 'package:example/pages/login/login-page.dart';
-import 'package:example/pages/settings/settings-page.dart';
+import 'package:example/pages/user/settings/settings-page.dart';
 import 'package:example/pages/sign-up/sign-up-page.dart';
+import 'package:example/pages/user/profile/profile-page.dart';
 import 'package:example/pages/user/user-page.dart';
 
 import 'package:floater/floater.dart';
@@ -18,11 +19,9 @@ abstract class Routes {
   static const contacts = "$home/contacts";
   static const addContact = "$home/addContact";
   static const chats = "/chats?{phone: string}";
-
-  //TODO: make user scope navigator
-
   static const user = "/user";
-  static const settings = "/settings";
+  static const profile = "$user/profile";
+  static const settings = "$user/settings";
   static const signUp = "/signUp";
   static const login = "/login";
 
@@ -35,6 +34,7 @@ abstract class Routes {
       ..registerPage(Routes.addContact, (routeArgs) => AddContactPage())
       ..registerPage(Routes.chats, (routeArgs) => ChatsPage(routeArgs["phone"]))
       ..registerPage(Routes.user, (routeArgs) => UserPage())
+      ..registerPage(Routes.profile, (routeArgs) => ProfilePage())
       ..registerPage(Routes.settings, (routeArgs) => SettingsPage())
       ..registerPage(Routes.signUp, (routeArgs) => SignUpPage())
       ..registerPage(Routes.login, (routeArgs) => LoginPage());
