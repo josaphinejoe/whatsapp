@@ -1,3 +1,4 @@
+import 'package:example/dialogs/dialog_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:floater/floater.dart';
 import 'package:example/pages/routes.dart';
@@ -9,9 +10,11 @@ import 'package:example/pages/routes.dart';
 class Shell extends StatelessWidgetBase {
   @override
   Widget build(BuildContext context) {
-    return ScopedNavigator(
-      "/",
-      initialRoute: Routes.splash,
+    return DialogManager(
+      child: ScopedNavigator(
+        "/",
+        initialRoute: Routes.splash,
+      ),
     );
   }
 }

@@ -43,7 +43,7 @@ class AddContactPage extends StatefulWidgetBase<AddContactPageState> {
           const SizedBox(
             height: 50.0,
           ),
-          _saveButton(
+          _SaveButton(
             hasErrors: this.state.hasErrors,
             save: this.state.save,
           ),
@@ -53,10 +53,10 @@ class AddContactPage extends StatefulWidgetBase<AddContactPageState> {
   }
 }
 
-class _saveButton extends StatelessWidget {
+class _SaveButton extends StatelessWidget {
   final VoidCallback save;
   final bool hasErrors;
-  const _saveButton({
+  const _SaveButton({
     required this.save,
     required this.hasErrors,
   }) : super();
@@ -67,27 +67,7 @@ class _saveButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.green[500],
       ),
-      onPressed: this.hasErrors
-          ? null
-          : () {
-              this.save();
-              if (!this.hasErrors) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      "Contact saved successfully!",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    duration: Duration(
-                      seconds: 2,
-                    ),
-                    backgroundColor: Colors.green,
-                  ),
-                );
-              }
-            },
+      onPressed: this.hasErrors ? null : this.save,
       child: const Text(
         "Save",
         style: TextStyle(

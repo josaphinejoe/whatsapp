@@ -12,7 +12,7 @@ class ChatsPage extends StatefulWidgetBase<ChatsPageState> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _chatsAppBar(
+      appBar: _ChatsAppBar(
         contact: this.state.contact,
         goBack: this.state.goBack,
       ),
@@ -36,7 +36,7 @@ class ChatsPage extends StatefulWidgetBase<ChatsPageState> {
                         final message = this.state.chats[index];
                         final formattedDate = this.state.getFormattedDate(message.time);
                         final isFirstMsgOfDay = this.state.isFirstMsgOfDay(index, formattedDate);
-                        return _chat(
+                        return _Chat(
                           isFirstMsgOfDay: isFirstMsgOfDay,
                           formattedDate: formattedDate,
                           message: message,
@@ -46,7 +46,7 @@ class ChatsPage extends StatefulWidgetBase<ChatsPageState> {
                     ),
                   ),
                 ),
-                _userInput(
+                _UserInput(
                   handleSendMessage: this.state.handleSendMessage,
                   messageController: this.state.messageController,
                   sendImage: this.state.sendImage,
@@ -60,12 +60,12 @@ class ChatsPage extends StatefulWidgetBase<ChatsPageState> {
   }
 }
 
-class _userInput extends StatelessWidget {
+class _UserInput extends StatelessWidget {
   final VoidCallback handleSendMessage;
   final TextEditingController messageController;
   final VoidCallback sendImage;
 
-  const _userInput({
+  const _UserInput({
     required this.handleSendMessage,
     required this.messageController,
     required this.sendImage,
@@ -122,8 +122,8 @@ class _userInput extends StatelessWidget {
   }
 }
 
-class _chat extends StatelessWidget {
-  const _chat({
+class _Chat extends StatelessWidget {
+  const _Chat({
     required this.isFirstMsgOfDay,
     required this.formattedDate,
     required this.message,
@@ -141,7 +141,7 @@ class _chat extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         if (isFirstMsgOfDay)
-          _dayRepresentation(
+          _DayRepresentation(
             formattedDate: formattedDate,
           ),
         Padding(
@@ -169,11 +169,11 @@ class _chat extends StatelessWidget {
                       ),
               ),
               child: message.isImage
-                  ? _imageMessage(
+                  ? _ImageMessage(
                       message: message,
                       getFormattedTime: getFormattedTime,
                     )
-                  : _textMessage(
+                  : _TextMessage(
                       message: message,
                       getFormattedTime: getFormattedTime,
                     ),
@@ -185,8 +185,8 @@ class _chat extends StatelessWidget {
   }
 }
 
-class _textMessage extends StatelessWidget {
-  const _textMessage({
+class _TextMessage extends StatelessWidget {
+  const _TextMessage({
     required this.message,
     required this.getFormattedTime,
   }) : super();
@@ -219,8 +219,8 @@ class _textMessage extends StatelessWidget {
   }
 }
 
-class _imageMessage extends StatelessWidget {
-  const _imageMessage({
+class _ImageMessage extends StatelessWidget {
+  const _ImageMessage({
     required this.message,
     required this.getFormattedTime,
   }) : super();
@@ -259,8 +259,8 @@ class _imageMessage extends StatelessWidget {
   }
 }
 
-class _dayRepresentation extends StatelessWidget {
-  const _dayRepresentation({
+class _DayRepresentation extends StatelessWidget {
+  const _DayRepresentation({
     required this.formattedDate,
   }) : super();
 
@@ -288,8 +288,8 @@ class _dayRepresentation extends StatelessWidget {
   }
 }
 
-class _chatsAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _chatsAppBar({
+class _ChatsAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _ChatsAppBar({
     required this.contact,
     required this.goBack,
   }) : super();

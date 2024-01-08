@@ -1,3 +1,4 @@
+import 'package:example/dialogs/dialog_service.dart';
 import 'package:example/sdk/services/file-service/default-file-service.dart';
 import 'package:example/sdk/services/file-service/file-service.dart';
 import 'package:example/sdk/services/user-service/mock-user-service.dart';
@@ -13,6 +14,7 @@ class Installer extends ServiceInstaller {
       ..registerSingleton<UserService>(() => MockUserService())
       ..registerSingleton<FileService>(() => DefaultFileService())
       ..registerSingleton<BottomNavManager>(() => BottomNavManager())
-      ..registerSingleton<ThemeProvider>(() => ThemeProvider());
+      ..registerSingleton<ThemeProvider>(() => ThemeProvider())
+      ..registerSingleton<DialogService>(() => DialogService());
   }
 }

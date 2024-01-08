@@ -9,7 +9,7 @@ class SettingsPage extends StatefulWidgetBase<SettingsPageState> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _settingsAppBar(
+      appBar: _SettingsAppBar(
         goBack: this.state.goBack,
       ),
       body: Padding(
@@ -18,18 +18,18 @@ class SettingsPage extends StatefulWidgetBase<SettingsPageState> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              _displayInfo(),
-              _themeInfo(
+              _DisplayInfo(),
+              _ThemeInfo(
                 themeNotifier: this.state.themeNotifier,
                 isDarkMode: this.state.isDarkMode,
                 toggleTheme: this.state.toggleTheme,
               ),
-              _aboutInfo(
+              _AboutInfo(
                 userName: this.state.userName,
               ),
-              _statusInfo(),
-              _privacyPolicy(),
-              _logout(
+              _StatusInfo(),
+              _PrivacyPolicy(),
+              _Logout(
                 logout: this.state.logout,
               ),
             ],
@@ -40,8 +40,8 @@ class SettingsPage extends StatefulWidgetBase<SettingsPageState> {
   }
 }
 
-class _displayInfo extends StatelessWidget {
-  const _displayInfo({
+class _DisplayInfo extends StatelessWidget {
+  const _DisplayInfo({
     Key? key,
   }) : super(key: key);
 
@@ -71,11 +71,11 @@ class _displayInfo extends StatelessWidget {
   }
 }
 
-class _themeInfo extends StatelessWidget {
+class _ThemeInfo extends StatelessWidget {
   final ValueListenable<bool> themeNotifier;
   final bool isDarkMode;
   final void Function(bool) toggleTheme;
-  const _themeInfo({
+  const _ThemeInfo({
     required this.themeNotifier,
     required this.isDarkMode,
     required this.toggleTheme,
@@ -121,9 +121,9 @@ class _themeInfo extends StatelessWidget {
   }
 }
 
-class _aboutInfo extends StatelessWidget {
+class _AboutInfo extends StatelessWidget {
   final String userName;
-  const _aboutInfo({
+  const _AboutInfo({
     required this.userName,
     Key? key,
   }) : super(key: key);
@@ -157,8 +157,8 @@ class _aboutInfo extends StatelessWidget {
   }
 }
 
-class _statusInfo extends StatelessWidget {
-  const _statusInfo({
+class _StatusInfo extends StatelessWidget {
+  const _StatusInfo({
     Key? key,
   }) : super(key: key);
 
@@ -195,8 +195,8 @@ class _statusInfo extends StatelessWidget {
   }
 }
 
-class _privacyPolicy extends StatelessWidget {
-  const _privacyPolicy({
+class _PrivacyPolicy extends StatelessWidget {
+  const _PrivacyPolicy({
     Key? key,
   }) : super(key: key);
 
@@ -233,9 +233,9 @@ class _privacyPolicy extends StatelessWidget {
   }
 }
 
-class _logout extends StatelessWidget {
+class _Logout extends StatelessWidget {
   final VoidCallback logout;
-  const _logout({
+  const _Logout({
     required this.logout,
   }) : super();
 
@@ -265,8 +265,8 @@ class _logout extends StatelessWidget {
   }
 }
 
-class _settingsAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _settingsAppBar({
+class _SettingsAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _SettingsAppBar({
     required this.goBack,
   }) : super();
 

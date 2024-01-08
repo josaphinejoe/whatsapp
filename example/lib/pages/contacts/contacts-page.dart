@@ -18,16 +18,15 @@ class ContactsPage extends StatefulWidgetBase<ContactsPageState> {
           itemBuilder: (ctx, index) {
             final contact = this.state.contacts[index];
             return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  top: 10.0,
-                  bottom: 10.0,
-                ),
-                child: _contactTile(
-                  contact: contact,
-                  onTapChat: this.state.onTapChat,
-                ),
+              padding: const EdgeInsets.only(
+                top: 18.0,
+                bottom: 18.0,
+                left: 10.0,
+                right: 10.0,
+              ),
+              child: _ContactTile(
+                contact: contact,
+                onTapChat: this.state.onTapChat,
               ),
             );
           },
@@ -37,8 +36,8 @@ class ContactsPage extends StatefulWidgetBase<ContactsPageState> {
   }
 }
 
-class _contactTile extends StatelessWidget {
-  const _contactTile({
+class _ContactTile extends StatelessWidget {
+  const _ContactTile({
     required this.contact,
     required this.onTapChat,
     Key? key,

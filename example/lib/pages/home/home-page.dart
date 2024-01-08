@@ -72,15 +72,15 @@ class _HomeBottomNavigationBar extends StatelessWidgetBase {
 }
 
 class _HomeAppBar extends StatelessWidgetBase implements PreferredSizeWidget {
-  final ImageProvider<Object> displayPicture;
+  final ImageProvider<Object>? displayPicture;
   final List<String> titles;
   final int activeNavItem;
   final VoidCallback onTapUser;
   const _HomeAppBar({
     required this.titles,
     required this.activeNavItem,
-    required this.displayPicture,
     required this.onTapUser,
+    this.displayPicture,
     Key? key,
   }) : super(key: key);
 

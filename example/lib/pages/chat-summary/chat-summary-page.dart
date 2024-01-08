@@ -16,11 +16,10 @@ class ChatSummaryPage extends StatefulWidgetBase<ChatSummaryPageState> {
           itemBuilder: (ctx, index) {
             final chat = this.state.chatList[index];
             return Padding(
-              padding: const EdgeInsets.only(
-                top: 10.0,
-                bottom: 10.0,
+              padding: const EdgeInsets.symmetric(
+                vertical: 10.0,
               ),
-              child: _chatTile(
+              child: _ChatTile(
                 chat: chat,
                 onTapChat: this.state.onTapChat,
                 getFormattedDateTime: this.state.getFormattedDateTime,
@@ -33,11 +32,11 @@ class ChatSummaryPage extends StatefulWidgetBase<ChatSummaryPageState> {
   }
 }
 
-class _chatTile extends StatelessWidget {
+class _ChatTile extends StatelessWidget {
   final Chat chat;
   final void Function(Chat) onTapChat;
   final String Function(int) getFormattedDateTime;
-  const _chatTile({
+  const _ChatTile({
     required this.chat,
     required this.onTapChat,
     required this.getFormattedDateTime,

@@ -24,21 +24,13 @@ class ThemeProvider {
 
   ValueNotifier<bool> get themeNotifier => _themeNotifier;
 
-  ThemeProvider() {
-    this._LoadThemeFromStorage();
-  }
-
   void toggleTheme(bool val) {
     _isDarkMode = val;
     this._themeNotifier.value = this._isDarkMode;
     this._updateThemeInStorage();
   }
 
-  Future<void> _updateThemeInStorage() async {
-    await _themeStorage.write(key: this._storageKey, value: this._isDarkMode.toString());
-  }
-
-  Future<void> _LoadThemeFromStorage() async {
+  Future<void> loadThemeFromStorage() async {
     final storedValue = await this._themeStorage.read(key: this._storageKey);
     if (storedValue != null) {
       // ignore: sdk_version_since
@@ -47,5 +39,9 @@ class ThemeProvider {
     } else {
       await this._updateThemeInStorage();
     }
+  }
+
+  Future<void> _updateThemeInStorage() async {
+    await _themeStorage.write(key: this._storageKey, value: this._isDarkMode.toString());
   }
 }

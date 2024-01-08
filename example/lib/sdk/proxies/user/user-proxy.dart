@@ -45,33 +45,27 @@ class UserProxy implements User {
 
     final contact = new ContactProxy(ContactDto(firstName, lastName, phone, null, []));
     final contactList = [...this.contactList, contact];
-    final newUser = UserDto(this.firstName, this.lastName, this.profilePicture, this.phone, contactList);
-    this._dto = newUser;
+
+    await this._updateUser(this.firstName, this.lastName, this.profilePicture, this.phone, contactList);
     this._eventAggregator.publish(ContactAddedEvent());
-    await this._userService.updateStorage();
   }
 
   @override
   Future<void> changeName(String firstName, String? lastName) async {
     given(firstName, "firstName").ensure((t) => t.isNotEmptyOrWhiteSpace);
 
-    final newUser = UserDto(firstName, lastName, this.profilePicture, this.phone, this.contactList);
-    this._dto = newUser;
+    await this._updateUser(firstName, lastName, this.profilePicture, this.phone, this.contactList);
     this._eventAggregator.publish(UserUpdatedEvent(this));
-    await this._userService.updateStorage();
   }
 
   @override
   Future<void> changeProfilePicture(File profilePicture) async {
-    final newUser = UserDto(this.firstName, this.lastName, profilePicture, this.phone, this.contactList);
-    this._dto = newUser;
+    await this._updateUser(this.firstName, this.lastName, profilePicture, this.phone, this.contactList);
     this._eventAggregator.publish(UserUpdatedEvent(this));
-    await this._userService.updateStorage();
   }
 
   List<Chat> getChatSummary() {
-    final chatSummary = _generateChatList();
-    chatSummary.sort((a, b) => b.messageInfo.time.compareTo(a.messageInfo.time));
+    final chatSummary = _generateChatList()..sort((a, b) => b.messageInfo.time.compareTo(a.messageInfo.time));
     return chatSummary;
   }
 
@@ -89,6 +83,18 @@ class UserProxy implements User {
           ),
         )
         .toList();
+  }
+
+  Future<void> _updateUser(
+    String firstName,
+    String? lastName,
+    File? profilePicture,
+    String phone,
+    List<Contact> contactList,
+  ) async {
+    final newUser = UserDto(firstName, lastName, profilePicture, phone, contactList);
+    this._dto = newUser;
+    await this._userService.updateStorage();
   }
 
   factory UserProxy.fromJson(Map<String, dynamic> json) => UserProxy(UserDto.fromJson(json));

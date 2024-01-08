@@ -48,23 +48,21 @@ class ContactProxy implements Contact {
   Future<void> _sendMessage(String receiverPhone, String msg, bool isImage) async {
     given(receiverPhone, "receiverPhone").ensure((t) => t.isNotEmptyOrWhiteSpace);
 
+    await this._generateMessage(msg, true, isImage);
+    unawaited(
+      Future.delayed(const Duration(seconds: 10), () async {
+        await this._generateMessage("Hi, How are you?", false, false);
+      }),
+    );
+  }
+
+  Future<void> _generateMessage(String msg, bool isMyMsg, bool isImage) async {
     final chat =
-        MessageInfo(message: msg, time: DateTime.now().millisecondsSinceEpoch, isMyMsg: true, isImage: isImage);
+        MessageInfo(message: msg, time: DateTime.now().millisecondsSinceEpoch, isMyMsg: isMyMsg, isImage: isImage);
     final newChats = [...this.chats, chat];
     this._dto = ContactDto(this.firstName, this.lastName, this.phone, this.profilePicture, newChats);
     this._eventAggregator.publish(MessageSentEvent(this));
     await this._userService.updateStorage();
-
-    unawaited(
-      Future.delayed(const Duration(seconds: 10), () async {
-        final chat = MessageInfo(
-            message: "Hi, How are you?", time: DateTime.now().millisecondsSinceEpoch, isMyMsg: false, isImage: false);
-        final newChats = [...this.chats, chat];
-        this._dto = ContactDto(this.firstName, this.lastName, this.phone, this.profilePicture, newChats);
-        this._eventAggregator.publish(MessageSentEvent(this));
-        await this._userService.updateStorage();
-      }),
-    );
   }
 
   factory ContactProxy.fromJson(Map<String, dynamic> json) => ContactProxy(ContactDto.fromJson(json));

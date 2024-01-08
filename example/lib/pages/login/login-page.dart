@@ -9,7 +9,7 @@ class LoginPage extends StatefulWidgetBase<LoginPageState> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _loginAppBar(),
+      appBar: _LoginAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
@@ -38,17 +38,10 @@ class LoginPage extends StatefulWidgetBase<LoginPageState> {
               isPassword: true,
               maxLength: 50,
             ),
-            Visibility(
-              visible: this.state.isErrorTextNeeded,
-              child: Text(
-                "Authentication Failed",
-                style: TextStyle(color: Colors.red),
-              ),
-            ),
             const SizedBox(
               height: 40.0,
             ),
-            _loginButton(
+            _LoginButton(
               hasErrors: this.state.hasErrors,
               login: this.state.login,
             ),
@@ -69,8 +62,8 @@ class LoginPage extends StatefulWidgetBase<LoginPageState> {
   }
 }
 
-class _loginButton extends StatelessWidget {
-  const _loginButton({
+class _LoginButton extends StatelessWidget {
+  const _LoginButton({
     required this.hasErrors,
     required this.login,
     Key? key,
@@ -92,8 +85,8 @@ class _loginButton extends StatelessWidget {
   }
 }
 
-class _loginAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _loginAppBar({
+class _LoginAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _LoginAppBar({
     Key? key,
   }) : super(key: key);
 

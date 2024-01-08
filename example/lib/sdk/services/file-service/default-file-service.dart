@@ -13,9 +13,7 @@ class DefaultFileService implements FileService {
   }
 
   Future<String> _getPermanentFilePath(String fileName) async {
-    final directory = await (Platform.isIOS
-        ? path_provider.getApplicationDocumentsDirectory()
-        : path_provider.getApplicationSupportDirectory());
+    final directory = await path_provider.getApplicationSupportDirectory();
     final filePath = '${directory.path}/$fileName';
     return filePath;
   }

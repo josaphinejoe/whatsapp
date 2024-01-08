@@ -7,7 +7,8 @@ abstract class UserService {
   Future<void> createUser(String firstName, String? lastName, String phone, String password);
 
   Future<User> authenticate(String phone, String password);
-  Future<void> updateStorage();
   Future<void> logout();
-  Future<void> loadUserStorage();
+
+  Future<void> updateStorage(); // in order to persist changes
+  Future<void> loadUser();
 }

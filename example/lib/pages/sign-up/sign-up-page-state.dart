@@ -1,3 +1,4 @@
+import 'package:example/dialogs/dialog_service.dart';
 import 'package:example/pages/routes.dart';
 import 'package:example/pages/sign-up/sign-up-page.dart';
 import 'package:example/sdk/services/user-service/user-service.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 class SignUpPageState extends WidgetStateBase<SignUpPage> {
   final _navigator = NavigationService.instance.retrieveNavigator("/");
   final _userService = ServiceLocator.instance.resolve<UserService>();
+  final _dialogService = ServiceLocator.instance.resolve<DialogService>();
 
   late Validator<SignUpPageState> _validator;
 
@@ -46,10 +48,12 @@ class SignUpPageState extends WidgetStateBase<SignUpPage> {
     this.showLoading();
     try {
       await this._userService.createUser(this.firstName, this.lastName, this.phone, this.password);
+      this._dialogService.showSuccessMessage("User created successfully");
       this._navigator.popUntil((route) => route.isFirst);
       await this._navigator.pushReplacementNamed(Routes.login);
     } catch (e) {
       debugPrint(e.toString());
+      this._dialogService.showErrorMessage(e.toString());
       return;
     } finally {
       this.hideLoading();

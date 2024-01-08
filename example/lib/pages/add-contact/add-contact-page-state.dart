@@ -1,3 +1,4 @@
+import 'package:example/dialogs/dialog_service.dart';
 import 'package:example/pages/add-contact/add-contact-page.dart';
 import 'package:example/sdk/services/user-service/user-service.dart';
 import 'package:floater/floater.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 
 class AddContactPageState extends WidgetStateBase<AddContactPage> {
   final _userService = ServiceLocator.instance.resolve<UserService>();
+  final _dialogService = ServiceLocator.instance.resolve<DialogService>();
 
   late Validator<AddContactPageState> _validator;
 
@@ -42,8 +44,10 @@ class AddContactPageState extends WidgetStateBase<AddContactPage> {
     try {
       final user = this._userService.authenticatedUser;
       await user.addContact(this.firstName, this.phone, this.lastName);
+      this._dialogService.showSuccessMessage("Contact saved successfully!");
     } catch (e) {
       debugPrint(e.toString());
+      this._dialogService.showErrorMessage(e.toString());
       return;
     } finally {
       this.hideLoading();

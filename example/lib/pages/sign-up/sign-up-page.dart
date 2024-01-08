@@ -9,7 +9,7 @@ class SignUpPage extends StatefulWidgetBase<SignUpPageState> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _signUpAppBar(),
+      appBar: _SignUpAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
@@ -52,7 +52,7 @@ class SignUpPage extends StatefulWidgetBase<SignUpPageState> {
             const SizedBox(
               height: 50.0,
             ),
-            _signUpButton(
+            _SignUpButton(
               hasErrors: this.state.hasErrors,
               signUp: this.state.signUp,
             ),
@@ -73,8 +73,8 @@ class SignUpPage extends StatefulWidgetBase<SignUpPageState> {
   }
 }
 
-class _signUpButton extends StatelessWidget {
-  const _signUpButton({
+class _SignUpButton extends StatelessWidget {
+  const _SignUpButton({
     required this.hasErrors,
     required this.signUp,
     Key? key,
@@ -96,8 +96,8 @@ class _signUpButton extends StatelessWidget {
   }
 }
 
-class _signUpAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _signUpAppBar({
+class _SignUpAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _SignUpAppBar({
     Key? key,
   }) : super(key: key);
 

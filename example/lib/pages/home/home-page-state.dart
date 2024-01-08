@@ -13,16 +13,15 @@ class HomePageState extends WidgetStateBase<HomePage> {
   final _eventAggregator = ServiceLocator.instance.resolve<EventAggregator>();
   final _navigator = NavigationService.instance.retrieveNavigator("/");
 
-  late final GlobalKey<ScopedNavigatorState> nav0Key = this._bottomNavManager.nav0Key;
-  late final GlobalKey<ScopedNavigatorState> nav1Key = this._bottomNavManager.nav1Key;
-  late final GlobalKey<ScopedNavigatorState> nav2Key = this._bottomNavManager.nav2Key;
+  late GlobalKey<ScopedNavigatorState> nav0Key = this._bottomNavManager.nav0Key;
+  late GlobalKey<ScopedNavigatorState> nav1Key = this._bottomNavManager.nav1Key;
+  late GlobalKey<ScopedNavigatorState> nav2Key = this._bottomNavManager.nav2Key;
 
   late User _user;
   final List<String> _appBarTitles = ["WhatsApp", "Select Contact", "New Contact"];
 
   int get activeNavItem => this._bottomNavManager.currentSelectedNavItem;
   List<String> get appBarTitles => this._appBarTitles;
-  NavigatorState get currentNavigator => this._bottomNavManager.navigatorState;
 
   HomePageState() : super() {
     this.onInitState(() {
@@ -34,12 +33,11 @@ class HomePageState extends WidgetStateBase<HomePage> {
     });
   }
 
-  ImageProvider<Object> getImage() {
+  ImageProvider<Object>? getImage() {
     if (this._user.profilePicture != null) {
       return FileImage(this._user.profilePicture!);
     } else {
-      return const NetworkImage(
-          "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgPp7AelDxUJQ_t928VVlyIqM4sAMLIOsHyWkVgVRPzvFaUuJkNZG6U7DV8oYjIwpwzVKWwEGOFqQ_8jBTwiz8iDrR0GlQUVom65RMzoaLrYvNhVbwcFdgo2glP2lgp076Dvl6oNjrOuQp5oQstI1SCbVXITSPofI12AdM-KaB0rQBPAyRR5qpE-z8hDg/s16000-rw/blank-profile-picture-hd-images-photo-5.JPG");
+      return null;
     }
   }
 

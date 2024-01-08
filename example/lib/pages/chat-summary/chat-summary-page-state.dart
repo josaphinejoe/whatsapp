@@ -3,7 +3,6 @@ import 'package:example/pages/chat-summary/chat-summary-page.dart';
 import 'package:example/pages/routes.dart';
 import 'package:example/sdk/models/chat.dart';
 import 'package:example/sdk/services/user-service/user-service.dart';
-import 'package:example/utilities/helper.dart';
 import 'package:floater/floater.dart';
 
 class ChatSummaryPageState extends WidgetStateBase<ChatSummaryPage> {
@@ -24,7 +23,16 @@ class ChatSummaryPageState extends WidgetStateBase<ChatSummaryPage> {
   }
 
   String getFormattedDateTime(int time) {
-    return Helper.formatDateTime(time);
+    final now = DateTime.now();
+    final messageTime = DateTime.fromMillisecondsSinceEpoch(time);
+
+    if (now.year == messageTime.year && now.month == messageTime.month && now.day == messageTime.day) {
+      final amPm = messageTime.hour < 12 ? 'AM' : 'PM';
+      final formattedHour = messageTime.hour % 12 == 0 ? 12 : messageTime.hour % 12;
+      return '$formattedHour:${messageTime.minute.toString().padLeft(2, '0')} $amPm';
+    } else {
+      return '${messageTime.month}/${messageTime.day}/${messageTime.year}';
+    }
   }
 
   Future<void> onTapChat(Chat chat) async {

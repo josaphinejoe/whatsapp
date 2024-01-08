@@ -18,7 +18,7 @@ class SplashPageState extends WidgetStateBase<SplashPage> {
     await Future.delayed(Duration(seconds: 2));
 
     try {
-      await this._userService.loadUserStorage();
+      await this._userService.loadUser();
     } catch (e) {
       debugPrint(e.toString());
     }

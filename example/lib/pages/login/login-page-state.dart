@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:example/dialogs/dialog_service.dart';
 import 'package:example/pages/login/login-page.dart';
 import 'package:example/pages/routes.dart';
 import 'package:example/sdk/services/user-service/user-service.dart';
@@ -9,9 +10,9 @@ import 'package:flutter/material.dart';
 class LoginPageState extends WidgetStateBase<LoginPage> {
   final _navigator = NavigationService.instance.retrieveNavigator("/");
   final _userService = ServiceLocator.instance.resolve<UserService>();
+  final _dialogService = ServiceLocator.instance.resolve<DialogService>();
 
   late Validator<LoginPageState> _validator;
-  bool _isErrorTextNeeded = false;
   String _phone = "";
   String _password = "";
 
@@ -23,7 +24,6 @@ class LoginPageState extends WidgetStateBase<LoginPage> {
 
   bool get hasErrors => this._validator.hasErrors;
   ValidationErrors get errors => this._validator.errors;
-  bool get isErrorTextNeeded => this._isErrorTextNeeded;
 
   LoginPageState() : super() {
     this._createValidator();
@@ -41,11 +41,11 @@ class LoginPageState extends WidgetStateBase<LoginPage> {
     this.showLoading();
     try {
       await this._userService.authenticate(this.phone, this.password);
+      this._dialogService.showSuccessMessage("Successfully logged in");
       unawaited(this._navigator.pushReplacementNamed(Routes.home));
     } catch (e) {
       debugPrint(e.toString());
-      this._isErrorTextNeeded = true;
-      this.triggerStateChange();
+      this._dialogService.showErrorMessage(e.toString());
       return;
     } finally {
       this.hideLoading();
