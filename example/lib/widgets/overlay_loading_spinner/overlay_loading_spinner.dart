@@ -18,13 +18,13 @@ class OverlayLoadingSpinner extends StatelessWidgetBase {
         child,
         if (this.isEnabled) ...[
           Opacity(
-            child: new ModalBarrier(dismissible: false, color: Colors.grey),
             opacity: 0.3,
+            child: new ModalBarrier(dismissible: false, color: Colors.grey),
           ),
           Center(
             child: LoadingSpinner(),
           ),
-        ]
+        ],
 
         // if (this.isE)
       ],

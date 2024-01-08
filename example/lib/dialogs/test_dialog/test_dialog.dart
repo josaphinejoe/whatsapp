@@ -22,7 +22,7 @@ class TestDialog extends StatelessWidgetBase implements DialogBase {
         ElevatedButton(
           onPressed: () => Navigator.of(context).pop(false),
           child: const Text("Cancel"),
-        )
+        ),
       ],
     );
   }

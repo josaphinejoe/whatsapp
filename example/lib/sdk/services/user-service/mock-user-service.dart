@@ -121,8 +121,20 @@ class MockUserService implements UserService {
       ),
     );
 
-    annaContact.chats.add(MessageInfo(message: 'send me 2k', time: 1702009124942, isMyMsg: false));
-    annaContact.chats.add(MessageInfo(message: 'ok', time: 1702009124942, isMyMsg: true));
+    annaContact.chats.add(
+      MessageInfo(
+        message: 'send me 2k',
+        time: 1702009124942,
+        isMyMsg: false,
+      ),
+    );
+    annaContact.chats.add(
+      MessageInfo(
+        message: 'ok',
+        time: 1702009124942,
+        isMyMsg: true,
+      ),
+    );
     contacts.add(annaContact);
 
     final johnlyContact = ContactProxy(
@@ -136,10 +148,26 @@ class MockUserService implements UserService {
     );
 
     johnlyContact.chats.add(
-        MessageInfo(message: 'Hello Johnly, How is the flood? Hope you are safe', time: 1701943200000, isMyMsg: true));
-    johnlyContact.chats
-        .add(MessageInfo(message: 'I am safe only, still pouring outside.', time: 1701946800000, isMyMsg: false));
-    johnlyContact.chats.add(MessageInfo(message: 'so WFH only right?', time: 1701946800000, isMyMsg: true));
+      MessageInfo(
+        message: 'Hello Johnly, How is the flood? Hope you are safe',
+        time: 1701943200000,
+        isMyMsg: true,
+      ),
+    );
+    johnlyContact.chats.add(
+      MessageInfo(
+        message: 'I am safe only, still pouring outside.',
+        time: 1701946800000,
+        isMyMsg: false,
+      ),
+    );
+    johnlyContact.chats.add(
+      MessageInfo(
+        message: 'so WFH only right?',
+        time: 1701946800000,
+        isMyMsg: true,
+      ),
+    );
     contacts.add(johnlyContact);
 
     final meghanContact = ContactProxy(
@@ -152,8 +180,20 @@ class MockUserService implements UserService {
       ),
     );
 
-    meghanContact.chats.add(MessageInfo(message: 'Hi Meghana, Happy Birthday', time: 1701936000000, isMyMsg: true));
-    meghanContact.chats.add(MessageInfo(message: 'Thank you very much Irene', time: 1701940815000, isMyMsg: false));
+    meghanContact.chats.add(
+      MessageInfo(
+        message: 'Hi Meghana, Happy Birthday',
+        time: 1701936000000,
+        isMyMsg: true,
+      ),
+    );
+    meghanContact.chats.add(
+      MessageInfo(
+        message: 'Thank you very much Irene',
+        time: 1701940815000,
+        isMyMsg: false,
+      ),
+    );
     contacts.add(meghanContact);
 
     final roseContact = ContactProxy(
@@ -166,8 +206,20 @@ class MockUserService implements UserService {
       ),
     );
 
-    roseContact.chats.add(MessageInfo(message: 'Hi Irene', time: 1702006038985, isMyMsg: false));
-    roseContact.chats.add(MessageInfo(message: 'Hi Rose', time: 1702006038985, isMyMsg: true));
+    roseContact.chats.add(
+      MessageInfo(
+        message: 'Hi Irene',
+        time: 1702006038985,
+        isMyMsg: false,
+      ),
+    );
+    roseContact.chats.add(
+      MessageInfo(
+        message: 'Hi Rose',
+        time: 1702006038985,
+        isMyMsg: true,
+      ),
+    );
     contacts.add(roseContact);
 
     return contacts;

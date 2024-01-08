@@ -5,6 +5,7 @@ import 'package:example/sdk/models/message-info.dart';
 import 'package:example/sdk/proxies/contact/contact.dart';
 import 'package:floater/floater.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_bubble/chat_bubble.dart';
 
 class ChatsPage extends StatefulWidgetBase<ChatsPageState> {
   ChatsPage(String phone) : super(() => ChatsPageState(phone));
@@ -146,27 +147,16 @@ class _Chat extends StatelessWidget {
           ),
         Padding(
           padding: EdgeInsets.all(12.0),
-          child: Align(
-            alignment: message.isMyMsg ? Alignment.bottomRight : Alignment.bottomLeft,
+          child: ChatBubble(
+            clipper: ChatBubbleClipper1(
+              type: message.isMyMsg ? BubbleType.sendBubble : BubbleType.receiverBubble,
+            ),
+            alignment: message.isMyMsg ? Alignment.topRight : Alignment.topLeft,
+            backGroundColor: message.isMyMsg ? const Color.fromARGB(255, 217, 248, 178) : Colors.white,
             child: Container(
               constraints: const BoxConstraints(
                 minWidth: 80.0,
                 maxWidth: 300.0,
-              ),
-              padding: const EdgeInsets.all(12.0),
-              decoration: BoxDecoration(
-                color: message.isMyMsg ? const Color.fromARGB(255, 217, 248, 178) : Colors.white,
-                borderRadius: message.isMyMsg
-                    ? BorderRadius.only(
-                        topLeft: Radius.circular(12.0),
-                        bottomLeft: Radius.circular(12.0),
-                        bottomRight: Radius.circular(12.0),
-                      )
-                    : BorderRadius.only(
-                        topRight: Radius.circular(12.0),
-                        bottomRight: Radius.circular(12.0),
-                        bottomLeft: Radius.circular(12.0),
-                      ),
               ),
               child: message.isImage
                   ? _ImageMessage(
@@ -197,23 +187,26 @@ class _TextMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IntrinsicWidth(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Text(
-              message.message,
-              style: const TextStyle(
-                color: Colors.black87,
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Text(
+                message.message,
+                style: const TextStyle(
+                  color: Colors.black87,
+                ),
               ),
             ),
-          ),
-          const SizedBox(width: 8.0),
-          Text(
-            this.getFormattedTime(message.time),
-            style: const TextStyle(color: Colors.grey),
-          ),
-        ],
+            const SizedBox(width: 8.0),
+            Text(
+              this.getFormattedTime(message.time),
+              style: const TextStyle(color: Colors.grey),
+            ),
+          ],
+        ),
       ),
     );
   }
