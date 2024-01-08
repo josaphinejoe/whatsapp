@@ -19,11 +19,6 @@ class UserPageState extends WidgetStateBase<UserPage> {
   late String? _lastName;
   late File? _profilePicture;
 
-  bool _isReady = false;
-  bool _isFirstNameEditable = false;
-  bool _isLastNameEditable = false;
-
-  bool get isReady => this._isReady;
   String get phone => this._user.phone;
 
   String get firstName => this._firstName;
@@ -35,21 +30,11 @@ class UserPageState extends WidgetStateBase<UserPage> {
   File? get profilePicture => this._profilePicture;
   set profilePicture(File? value) => (this.._profilePicture = value).triggerStateChange();
 
-  bool get isFirstNameEditable => this._isFirstNameEditable;
-  set isFirstNameEditable(bool val) => (this.._isFirstNameEditable = val).triggerStateChange();
-
-  bool get isLastNameEditable => this._isLastNameEditable;
-  set isLastNameEditable(bool val) => (this.._isLastNameEditable = val).triggerStateChange();
-
   UserPageState() : super() {
-    this.onInitState(() {
-      this._user = this._userService.authenticatedUser;
-      this._firstName = this._user.firstName;
-      this._lastName = this._user.lastName;
-      this._profilePicture = this._user.profilePicture;
-      this._isReady = true;
-      this.triggerStateChange();
-    });
+    this._user = this._userService.authenticatedUser;
+    this._profilePicture = this._user.profilePicture;
+    this._firstName = this._user.firstName;
+    this._lastName = this._user.lastName;
   }
 
   Future<void> saveFirstName() async {
@@ -86,15 +71,15 @@ class UserPageState extends WidgetStateBase<UserPage> {
           await this._fileService.moveFileToPermanentLocation(File(pickedFile.path), "profilePicture");
       this._profilePicture = permanentFile;
       await this._user.changeProfilePicture(permanentFile);
+      this.triggerStateChange();
     }
   }
 
-  ImageProvider<Object> getImage() {
+  ImageProvider<Object>? getImage() {
     if (this.profilePicture != null) {
       return FileImage(this.profilePicture!);
     } else {
-      return const NetworkImage(
-          "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgPp7AelDxUJQ_t928VVlyIqM4sAMLIOsHyWkVgVRPzvFaUuJkNZG6U7DV8oYjIwpwzVKWwEGOFqQ_8jBTwiz8iDrR0GlQUVom65RMzoaLrYvNhVbwcFdgo2glP2lgp076Dvl6oNjrOuQp5oQstI1SCbVXITSPofI12AdM-KaB0rQBPAyRR5qpE-z8hDg/s16000-rw/blank-profile-picture-hd-images-photo-5.JPG");
+      return null;
     }
   }
 
