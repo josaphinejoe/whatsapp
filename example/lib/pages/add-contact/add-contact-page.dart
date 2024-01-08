@@ -56,6 +56,7 @@ class AddContactPage extends StatefulWidgetBase<AddContactPageState> {
 class _SaveButton extends StatelessWidget {
   final VoidCallback save;
   final bool hasErrors;
+
   const _SaveButton({
     required this.save,
     required this.hasErrors,

@@ -36,6 +36,7 @@ class _ChatTile extends StatelessWidget {
   final Chat chat;
   final void Function(Chat) onTapChat;
   final String Function(int) getFormattedDateTime;
+
   const _ChatTile({
     required this.chat,
     required this.onTapChat,

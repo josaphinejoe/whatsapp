@@ -75,6 +75,7 @@ class _ThemeInfo extends StatelessWidget {
   final ValueListenable<bool> themeNotifier;
   final bool isDarkMode;
   final void Function(bool) toggleTheme;
+
   const _ThemeInfo({
     required this.themeNotifier,
     required this.isDarkMode,
@@ -123,6 +124,7 @@ class _ThemeInfo extends StatelessWidget {
 
 class _AboutInfo extends StatelessWidget {
   final String userName;
+
   const _AboutInfo({
     required this.userName,
     Key? key,
@@ -235,6 +237,7 @@ class _PrivacyPolicy extends StatelessWidget {
 
 class _Logout extends StatelessWidget {
   final VoidCallback logout;
+
   const _Logout({
     required this.logout,
   }) : super();

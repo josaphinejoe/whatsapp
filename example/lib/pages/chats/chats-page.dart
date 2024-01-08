@@ -293,6 +293,7 @@ class _ChatsAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.contact,
     required this.goBack,
   }) : super();
+
   final Contact contact;
   final VoidCallback goBack;
 

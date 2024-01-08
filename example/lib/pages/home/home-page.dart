@@ -5,6 +5,7 @@ import 'package:floater/floater.dart';
 
 class HomePage extends StatefulWidgetBase<HomePageState> {
   HomePage() : super(() => HomePageState());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,6 +77,7 @@ class _HomeAppBar extends StatelessWidgetBase implements PreferredSizeWidget {
   final List<String> titles;
   final int activeNavItem;
   final VoidCallback onTapUser;
+
   const _HomeAppBar({
     required this.titles,
     required this.activeNavItem,

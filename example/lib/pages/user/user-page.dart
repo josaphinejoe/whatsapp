@@ -59,6 +59,7 @@ class UserPage extends StatefulWidgetBase<UserPageState> {
 class _ProfilePicture extends StatelessWidget {
   final ImageProvider<Object>? Function() getImage;
   final VoidCallback editProfilePicture;
+
   const _ProfilePicture({
     required this.getImage,
     required this.editProfilePicture,
@@ -98,6 +99,7 @@ class _ProfilePicture extends StatelessWidget {
 class _UserAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback goBack;
   final VoidCallback goToSettings;
+
   const _UserAppBar({
     required this.goBack,
     required this.goToSettings,
