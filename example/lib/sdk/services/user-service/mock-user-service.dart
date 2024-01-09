@@ -13,7 +13,7 @@ import 'package:floater/floater.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class MockUserService implements UserService {
-  final FlutterSecureStorage _userStorage = FlutterSecureStorage();
+  final FlutterSecureStorage _userStorage = const FlutterSecureStorage();
   final String _storageKey = "userCredentials";
 
   List<UserCredentials> _userCredentialList = [];
@@ -21,7 +21,10 @@ class MockUserService implements UserService {
   String? _password;
   bool _isAuthenticated = false;
 
+  @override
   User get authenticatedUser => this._user!;
+
+  @override
   bool get isAuthenticated => this._isAuthenticated;
 
   @override
@@ -45,6 +48,7 @@ class MockUserService implements UserService {
         );
   }
 
+  @override
   Future<User> authenticate(String phone, String password) async {
     given(phone, "phone").ensure((t) => t.isNotEmptyOrWhiteSpace);
     given(password, "password").ensure((t) => t.isNotEmptyOrWhiteSpace);
@@ -61,6 +65,7 @@ class MockUserService implements UserService {
     return this._user!;
   }
 
+  @override
   Future<void> logout() async {
     this._isAuthenticated = false;
     await this.updateStorage();
@@ -68,6 +73,7 @@ class MockUserService implements UserService {
     this._password = null;
   }
 
+  @override
   Future<void> updateStorage() async {
     final userDto = UserDto(
       this._user!.firstName,
@@ -93,13 +99,14 @@ class MockUserService implements UserService {
         );
   }
 
+  @override
   Future<void> loadUser() async {
     final storedUser = await this._userStorage.read(key: this._storageKey);
     if (storedUser != null) {
       final List<dynamic> userCredentialsJsonList = json.decode(storedUser);
       this._userCredentialList = userCredentialsJsonList.map((json) => UserCredentials.fromJson(json)).toList();
 
-      final loggedUser = this._userCredentialList.find((t) => t.isAuthenticated == true) ?? null;
+      final loggedUser = this._userCredentialList.find((t) => t.isAuthenticated == true);
       if (loggedUser != null) {
         this._user = UserProxy(loggedUser.user);
         this._isAuthenticated = true;

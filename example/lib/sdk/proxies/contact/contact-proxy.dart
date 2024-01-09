@@ -38,6 +38,7 @@ class ContactProxy implements Contact {
     await this._sendMessage(receiverPhone, msg, false);
   }
 
+  @override
   Future<void> sendImage(String receiverPhone, String filePath) async {
     given(receiverPhone, "receiverPhone").ensure((t) => t.isNotEmptyOrWhiteSpace);
     given(filePath, "filePath").ensure((t) => t.isNotEmptyOrWhiteSpace);

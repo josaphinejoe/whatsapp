@@ -21,7 +21,7 @@ class SplashPage extends StatefulWidgetBase<SplashPageState> {
             ),
             Column(
               children: [
-                Text(
+                const Text(
                   "from",
                   style: TextStyle(color: Colors.grey),
                 ),
@@ -30,10 +30,10 @@ class SplashPage extends StatefulWidgetBase<SplashPageState> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.facebook,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 3.0,
                       ),
                       Text(
@@ -45,7 +45,7 @@ class SplashPage extends StatefulWidgetBase<SplashPageState> {
                 ),
               ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
           ],
         ),
       ),

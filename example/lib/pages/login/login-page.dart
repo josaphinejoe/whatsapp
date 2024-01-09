@@ -9,7 +9,7 @@ class LoginPage extends StatefulWidgetBase<LoginPageState> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _LoginAppBar(),
+      appBar: const _LoginAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
@@ -50,7 +50,7 @@ class LoginPage extends StatefulWidgetBase<LoginPageState> {
             ),
             TextButton(
               onPressed: () => this.state.goToSignUp(),
-              child: Text(
+              child: const Text(
                 "Sign up",
                 style: TextStyle(fontSize: 20, color: Colors.red),
               ),
@@ -93,9 +93,9 @@ class _LoginAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(
+      title: const Text(
         "Log In",
-        style: const TextStyle(color: Colors.white, fontSize: 25),
+        style: TextStyle(color: Colors.white, fontSize: 25),
       ),
       backgroundColor: Theme.of(context).primaryColor,
       foregroundColor: Colors.white,
@@ -104,5 +104,5 @@ class _LoginAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

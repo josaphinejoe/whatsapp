@@ -1,6 +1,6 @@
 import 'package:example/pages/user/settings/settings-page-state.dart';
+import 'package:example/pages/user/settings/widgets/display/display.dart';
 import 'package:floater/floater.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidgetBase<SettingsPageState> {
@@ -18,16 +18,12 @@ class SettingsPage extends StatefulWidgetBase<SettingsPageState> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _Display(
-                themeNotifier: this.state.themeNotifier,
-                isDarkMode: this.state.isDarkMode,
-                toggleTheme: this.state.toggleTheme,
-              ),
+              Display(),
               _AboutInfo(
                 userName: this.state.userName,
               ),
-              _StatusInfo(),
-              _PrivacyPolicy(),
+              const _StatusInfo(),
+              const _PrivacyPolicy(),
               _Logout(
                 logout: this.state.logout,
               ),
@@ -35,67 +31,6 @@ class SettingsPage extends StatefulWidgetBase<SettingsPageState> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _Display extends StatelessWidget {
-  final ValueListenable<bool> themeNotifier;
-  final bool isDarkMode;
-  final void Function(bool) toggleTheme;
-
-  const _Display({
-    required this.themeNotifier,
-    required this.isDarkMode,
-    required this.toggleTheme,
-  }) : super();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 20,
-        ),
-        Text(
-          "Display",
-          style: TextStyle(
-            fontSize: 21,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                "Theme",
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-            ValueListenableBuilder<bool>(
-              valueListenable: this.themeNotifier,
-              builder: (context, isDarkMode, _) {
-                return Switch(
-                  value: this.isDarkMode,
-                  activeColor: this.isDarkMode ? Colors.white : Colors.black12,
-                  onChanged: (bool value) => this.toggleTheme(value),
-                );
-              },
-            ),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-          child: Text(
-            this.isDarkMode ? "Dark" : "Light",
-            style: TextStyle(fontSize: 20, color: Colors.grey),
-          ),
-        ),
-      ],
     );
   }
 }
@@ -113,20 +48,36 @@ class _AboutInfo extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 40,
         ),
-        Text("About", style: TextStyle(fontSize: 21, fontWeight: FontWeight.w500)),
+        const Text(
+          "About",
+          style: TextStyle(
+            fontSize: 21,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         Row(
           children: [
-            Expanded(child: Text("User", style: TextStyle(fontSize: 20))),
+            const Expanded(
+              child: Text(
+                "User",
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(this.userName, style: TextStyle(fontSize: 20)),
+              child: Text(
+                this.userName,
+                style: const TextStyle(
+                  fontSize: 20,
+                ),
+              ),
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 40,
         ),
       ],
@@ -141,7 +92,7 @@ class _StatusInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -152,7 +103,7 @@ class _StatusInfo extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
+          padding: EdgeInsets.symmetric(vertical: 8),
           child: Text(
             "Online",
             style: TextStyle(
@@ -172,13 +123,19 @@ class _PrivacyPolicy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
           height: 40,
         ),
-        Text("Privacy Policy", style: TextStyle(fontSize: 21, fontWeight: FontWeight.w500)),
+        Text(
+          "Privacy Policy",
+          style: TextStyle(
+            fontSize: 21,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         SizedBox(
           height: 8.0,
         ),
@@ -206,12 +163,12 @@ class _Logout extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 30,
         ),
         TextButton(
           onPressed: this.logout,
-          child: Text(
+          child: const Text(
             "Log out",
             style: TextStyle(
               fontSize: 20,
@@ -254,5 +211,5 @@ class _SettingsAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

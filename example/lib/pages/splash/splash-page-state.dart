@@ -15,7 +15,7 @@ class SplashPageState extends WidgetStateBase<SplashPage> {
   }
 
   Future<void> _pauseAndGo() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
 
     try {
       await this._userService.loadUser();

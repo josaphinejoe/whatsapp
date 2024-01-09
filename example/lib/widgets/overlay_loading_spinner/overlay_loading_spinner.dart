@@ -6,7 +6,7 @@ class OverlayLoadingSpinner extends StatelessWidgetBase {
   final Widget child;
   final bool isEnabled;
 
-  OverlayLoadingSpinner({
+  const OverlayLoadingSpinner({
     required this.child,
     required this.isEnabled,
   });
@@ -17,9 +17,9 @@ class OverlayLoadingSpinner extends StatelessWidgetBase {
       children: <Widget>[
         child,
         if (this.isEnabled) ...[
-          Opacity(
+          const Opacity(
             opacity: 0.3,
-            child: new ModalBarrier(dismissible: false, color: Colors.grey),
+            child: ModalBarrier(dismissible: false, color: Colors.grey),
           ),
           Center(
             child: LoadingSpinner(),

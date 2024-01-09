@@ -55,6 +55,7 @@ linter:
     prefer_if_elements_to_conditional_expressions: true
     prefer_null_aware_method_calls: true
     prefer_single_quotes: false
+    prefer_const_literals_to_create_immutables: true
     require_trailing_commas: true
     sort_child_properties_last: true
     unawaited_futures: true

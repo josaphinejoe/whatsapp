@@ -77,7 +77,7 @@ class ChatsPageState extends WidgetStateBase<ChatsPage> {
     this._navigator.pop();
   }
 
-  bool isFirstMsgOfDay(index, time) {
+  bool isFirstMsgOfDay(int index, time) {
     if (index == this.chats.length - 1) {
       return true;
     } else if (this.getFormattedDate(this.chats[index + 1].time) != time) {

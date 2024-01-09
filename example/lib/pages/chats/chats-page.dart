@@ -81,21 +81,21 @@ class _UserInput extends StatelessWidget {
           Expanded(
             child: TextField(
               controller: this.messageController,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black54,
               ),
               decoration: InputDecoration(
-                hintStyle: TextStyle(
+                hintStyle: const TextStyle(
                   color: Colors.black54,
                 ),
                 hintText: "Message",
-                prefixIcon: Icon(Icons.emoji_emotions),
+                prefixIcon: const Icon(Icons.emoji_emotions),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30.0),
                 ),
                 suffixIcon: IconButton(
                   onPressed: this.sendImage,
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.image,
                   ),
                 ),
@@ -105,7 +105,7 @@ class _UserInput extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Container(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50.0),
                 color: const Color(0xFF387463),
@@ -148,7 +148,7 @@ class _Chat extends StatelessWidget {
             formattedDate: formattedDate,
           ),
         Padding(
-          padding: EdgeInsets.all(5.0),
+          padding: const EdgeInsets.all(5.0),
           child: ChatBubble(
             clipper: ChatBubbleClipper1(
               type: message.isMyMsg ? BubbleType.sendBubble : BubbleType.receiverBubble,
@@ -266,7 +266,7 @@ class _DayRepresentation extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Container(
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
           color: Colors.white70,
@@ -327,5 +327,5 @@ class _ChatsAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

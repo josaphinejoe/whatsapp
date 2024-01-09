@@ -552,7 +552,8 @@ class NavigationManager {
         .ensure((t) => t.isNotEmptyOrWhiteSpace)
         .ensure((t) => t.trim().substring(1).split("/").length == 1);
 
-    unawaited(SharedPreferences.getInstance().then((t) => t.setString(_persistKey, path))
+    unawaited(SharedPreferences.getInstance()
+        .then((t) => t.setString(_persistKey, path))
         // .then((t) => print("Saved=$t"))
         .catchError((e) {
       print(e);

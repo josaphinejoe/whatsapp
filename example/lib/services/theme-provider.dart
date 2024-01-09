@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ThemeProvider {
-  final FlutterSecureStorage _themeStorage = FlutterSecureStorage();
+  final FlutterSecureStorage _themeStorage = const FlutterSecureStorage();
   final _storageKey = "theme";
 
   final ThemeData _lightTheme = ThemeData(

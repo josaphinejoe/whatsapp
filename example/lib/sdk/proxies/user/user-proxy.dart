@@ -43,7 +43,7 @@ class UserProxy implements User {
       throw Exception("Number already exist");
     }
 
-    final contact = new ContactProxy(ContactDto(firstName, lastName, phone, null, []));
+    final contact = ContactProxy(ContactDto(firstName, lastName, phone, null, []));
     final contactList = [...this.contactList, contact];
 
     await this._updateUser(this.firstName, this.lastName, this.profilePicture, this.phone, contactList);
@@ -64,6 +64,7 @@ class UserProxy implements User {
     this._eventAggregator.publish(UserUpdatedEvent(this));
   }
 
+  @override
   List<Chat> getChatSummary() {
     final chatSummary = _generateChatList()..sort((a, b) => b.messageInfo.time.compareTo(a.messageInfo.time));
     return chatSummary;

@@ -2,11 +2,16 @@
     "cSpell.words": [
         "autocorrect",
         "cupertino",
+        "fullscreen",
+        "interps",
         "messagefunc",
         "prefs",
         "rxdart",
         "Schyler",
+        "sublist",
         "unawaited",
-        "unlisten"
+        "unlisten",
+        "unwatch",
+        "vsync"
     ]
 }

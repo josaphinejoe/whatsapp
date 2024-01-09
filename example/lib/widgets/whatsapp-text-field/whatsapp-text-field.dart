@@ -25,6 +25,7 @@ class WhatsappTextField extends StatefulWidgetBase<WhatsappTextFieldState> {
     this.initialValue = "",
   }) : super(() => WhatsappTextFieldState());
 
+  @override
   Widget build(BuildContext context) {
     return TextField(
       autocorrect: false,
@@ -39,7 +40,9 @@ class WhatsappTextField extends StatefulWidgetBase<WhatsappTextFieldState> {
         errorText: this.errorMessage,
         errorMaxLines: 2,
       ),
-      style: TextStyle(color: Colors.grey),
+      style: const TextStyle(
+        color: Colors.grey,
+      ),
     );
   }
 }

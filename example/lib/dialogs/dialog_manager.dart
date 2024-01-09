@@ -23,7 +23,6 @@ class DialogManager extends StatefulWidgetBase<DialogManagerState> {
 class DialogManagerState extends WidgetStateBase<DialogManager> with TickerProviderStateMixin {
   static const _snackbarVisibilityDuration = Duration(seconds: 4);
 
-  // TODO: Use event aggregator instead.
   final _dialogService = ServiceLocator.instance.resolve<DialogService>();
 
   late final _snackBarAnimationController = AnimationController(
@@ -53,7 +52,7 @@ class DialogManagerState extends WidgetStateBase<DialogManager> with TickerProvi
       ),
       barrierDismissible: barrierDismissible,
       useSafeArea: false,
-      barrierColor: Color(0xFF387463).withOpacity(0.3),
+      barrierColor: const Color(0xFF387463).withOpacity(0.3),
     );
   }
 
