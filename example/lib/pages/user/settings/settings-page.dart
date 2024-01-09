@@ -18,8 +18,7 @@ class SettingsPage extends StatefulWidgetBase<SettingsPageState> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _DisplayInfo(),
-              _ThemeInfo(
+              _Display(
                 themeNotifier: this.state.themeNotifier,
                 isDarkMode: this.state.isDarkMode,
                 toggleTheme: this.state.toggleTheme,
@@ -40,10 +39,16 @@ class SettingsPage extends StatefulWidgetBase<SettingsPageState> {
   }
 }
 
-class _DisplayInfo extends StatelessWidget {
-  const _DisplayInfo({
-    Key? key,
-  }) : super(key: key);
+class _Display extends StatelessWidget {
+  final ValueListenable<bool> themeNotifier;
+  final bool isDarkMode;
+  final void Function(bool) toggleTheme;
+
+  const _Display({
+    required this.themeNotifier,
+    required this.isDarkMode,
+    required this.toggleTheme,
+  }) : super();
 
   @override
   Widget build(BuildContext context) {
@@ -63,27 +68,6 @@ class _DisplayInfo extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-      ],
-    );
-  }
-}
-
-class _ThemeInfo extends StatelessWidget {
-  final ValueListenable<bool> themeNotifier;
-  final bool isDarkMode;
-  final void Function(bool) toggleTheme;
-
-  const _ThemeInfo({
-    required this.themeNotifier,
-    required this.isDarkMode,
-    required this.toggleTheme,
-  }) : super();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
         Row(
           children: [
             Expanded(
@@ -108,7 +92,7 @@ class _ThemeInfo extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 4.0),
           child: Text(
             this.isDarkMode ? "Dark" : "Light",
-            style: TextStyle(fontSize: 20, color: Colors.grey[800]),
+            style: TextStyle(fontSize: 20, color: Colors.grey),
           ),
         ),
       ],
