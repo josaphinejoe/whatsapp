@@ -48,7 +48,7 @@ class ChatsPage extends StatefulWidgetBase<ChatsPageState> {
                   ),
                 ),
                 _UserInput(
-                  handleSendMessage: this.state.handleSendMessage,
+                  handleSendMessage: this.state.sendMessage,
                   messageController: this.state.messageController,
                   sendImage: this.state.sendImage,
                 ),
@@ -75,7 +75,7 @@ class _UserInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(4.0),
       child: Row(
         children: [
           Expanded(
@@ -88,15 +88,15 @@ class _UserInput extends StatelessWidget {
                 hintStyle: TextStyle(
                   color: Colors.black54,
                 ),
-                hintText: "Type your message...",
+                hintText: "Message",
+                prefixIcon: Icon(Icons.emoji_emotions),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(18.0),
+                  borderRadius: BorderRadius.circular(30.0),
                 ),
                 suffixIcon: IconButton(
                   onPressed: this.sendImage,
                   icon: Icon(
                     Icons.image,
-                    color: Colors.grey[800],
                   ),
                 ),
               ),
@@ -105,6 +105,7 @@ class _UserInput extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Container(
+              padding: EdgeInsets.all(8.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50.0),
                 color: const Color(0xFF387463),
@@ -113,6 +114,7 @@ class _UserInput extends StatelessWidget {
                 onPressed: () => this.handleSendMessage(),
                 icon: const Icon(
                   Icons.send,
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -146,7 +148,7 @@ class _Chat extends StatelessWidget {
             formattedDate: formattedDate,
           ),
         Padding(
-          padding: EdgeInsets.all(12.0),
+          padding: EdgeInsets.all(5.0),
           child: ChatBubble(
             clipper: ChatBubbleClipper1(
               type: message.isMyMsg ? BubbleType.sendBubble : BubbleType.receiverBubble,

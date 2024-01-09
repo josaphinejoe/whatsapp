@@ -7,7 +7,7 @@ class WhatsAppState extends WidgetStateBase<WhatsApp> {
 
   WhatsAppState() : super() {
     this.onInitState(() async {
-      await themeProvider.loadThemeFromStorage();
+      await themeProvider.init();
     });
   }
 }

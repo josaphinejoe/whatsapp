@@ -40,7 +40,7 @@ class UserProxy implements User {
     given(phone, "phone").ensure((t) => t.isNotEmptyOrWhiteSpace);
 
     if (this.contactList.find((t) => t.phone == phone) != null) {
-      throw Exception("Contact with same number already exist");
+      throw Exception("Number already exist");
     }
 
     final contact = new ContactProxy(ContactDto(firstName, lastName, phone, null, []));

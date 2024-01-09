@@ -17,7 +17,7 @@ class ChatSummaryPage extends StatefulWidgetBase<ChatSummaryPageState> {
             final chat = this.state.chatList[index];
             return Padding(
               padding: const EdgeInsets.symmetric(
-                vertical: 10.0,
+                vertical: 4.0,
               ),
               child: _ChatTile(
                 chat: chat,
@@ -65,7 +65,7 @@ class _ChatTile extends StatelessWidget {
               "https://cdn4.iconfinder.com/data/icons/business-and-office-29/512/396-_profile__avatar__image__dp_-512.png",
         ),
         backgroundColor: Colors.white,
-        radius: 30,
+        radius: 25,
       ),
       trailing: Text(this.getFormattedDateTime(chat.messageInfo.time)),
     );

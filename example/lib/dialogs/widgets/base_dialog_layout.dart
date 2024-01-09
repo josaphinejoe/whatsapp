@@ -30,7 +30,7 @@ class BaseDialogLayout extends StatelessWidgetBase {
                 offset: Offset(0, 0),
                 blurRadius: 36,
                 spreadRadius: 0,
-              )
+              ),
             ],
           ),
           child: this.child,

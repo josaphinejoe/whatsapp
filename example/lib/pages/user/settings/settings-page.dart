@@ -16,7 +16,7 @@ class SettingsPage extends StatefulWidgetBase<SettingsPageState> {
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _DisplayInfo(),
               _ThemeInfo(
@@ -48,23 +48,20 @@ class _DisplayInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
           height: 20,
         ),
-        const Row(
-          children: [
-            Text(
-              "Display",
-              style: TextStyle(
-                fontSize: 21,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
+        Text(
+          "Display",
+          style: TextStyle(
+            fontSize: 21,
+            fontWeight: FontWeight.w500,
+          ),
         ),
         const SizedBox(
-          height: 20,
+          height: 10,
         ),
       ],
     );
@@ -85,6 +82,7 @@ class _ThemeInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
@@ -108,13 +106,9 @@ class _ThemeInfo extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4.0),
-          child: Row(
-            children: [
-              Text(
-                this.isDarkMode ? "Dark" : "Light",
-                style: TextStyle(fontSize: 20),
-              ),
-            ],
+          child: Text(
+            this.isDarkMode ? "Dark" : "Light",
+            style: TextStyle(fontSize: 20, color: Colors.grey[800]),
           ),
         ),
       ],
@@ -133,15 +127,12 @@ class _AboutInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
           height: 40,
         ),
-        Row(
-          children: [
-            Text("About", style: TextStyle(fontSize: 21, fontWeight: FontWeight.w500)),
-          ],
-        ),
+        Text("About", style: TextStyle(fontSize: 21, fontWeight: FontWeight.w500)),
         Row(
           children: [
             Expanded(child: Text("User", style: TextStyle(fontSize: 20))),
@@ -167,30 +158,23 @@ class _StatusInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Text(
-              "Status",
-              style: TextStyle(
-                fontSize: 21,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
+        Text(
+          "Status",
+          style: TextStyle(
+            fontSize: 21,
+            fontWeight: FontWeight.w500,
+          ),
         ),
-        Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Text(
-                "Online",
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-              ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Text(
+            "Online",
+            style: TextStyle(
+              fontSize: 20,
             ),
-          ],
+          ),
         ),
       ],
     );
@@ -205,30 +189,21 @@ class _PrivacyPolicy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
           height: 40,
         ),
-        Row(
-          children: [
-            Text("Privacy Policy", style: TextStyle(fontSize: 21, fontWeight: FontWeight.w500)),
-          ],
-        ),
+        Text("Privacy Policy", style: TextStyle(fontSize: 21, fontWeight: FontWeight.w500)),
         SizedBox(
           height: 8.0,
         ),
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                "Our Privacy Policy has been crafted to provide clarity on how we gather, utilize, and protect your data when you engage with our messaging services. Your trust is of utmost importance to us, and we are committed to ensuring that your information is handled with the utmost care and in accordance with the highest standards of privacy and security.",
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey,
-                ),
-              ),
-            ),
-          ],
+        Text(
+          "Our Privacy Policy has been crafted to provide clarity on how we gather, utilize, and protect your data when you engage with our messaging services. Your trust is of utmost importance to us, and we are committed to ensuring that your information is handled with the utmost care and in accordance with the highest standards of privacy and security.",
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.grey,
+          ),
         ),
       ],
     );
@@ -245,23 +220,20 @@ class _Logout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
           height: 30,
         ),
-        Row(
-          children: [
-            TextButton(
-              onPressed: this.logout,
-              child: Text(
-                "Log out",
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.red,
-                ),
-              ),
+        TextButton(
+          onPressed: this.logout,
+          child: Text(
+            "Log out",
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.red,
             ),
-          ],
+          ),
         ),
       ],
     );

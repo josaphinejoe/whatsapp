@@ -13,9 +13,9 @@ class HomePageState extends WidgetStateBase<HomePage> {
   final _eventAggregator = ServiceLocator.instance.resolve<EventAggregator>();
   final _navigator = NavigationService.instance.retrieveNavigator("/");
 
-  late GlobalKey<ScopedNavigatorState> nav0Key = this._bottomNavManager.nav0Key;
-  late GlobalKey<ScopedNavigatorState> nav1Key = this._bottomNavManager.nav1Key;
-  late GlobalKey<ScopedNavigatorState> nav2Key = this._bottomNavManager.nav2Key;
+  GlobalKey<ScopedNavigatorState> get nav0Key => this._bottomNavManager.nav0Key;
+  GlobalKey<ScopedNavigatorState> get nav1Key => this._bottomNavManager.nav1Key;
+  GlobalKey<ScopedNavigatorState> get nav2Key => this._bottomNavManager.nav2Key;
 
   late User _user;
   final List<String> _appBarTitles = ["WhatsApp", "Select Contact", "New Contact"];

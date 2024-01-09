@@ -50,26 +50,13 @@ class ChatsPageState extends WidgetStateBase<ChatsPage> {
     }
   }
 
-  Future<void> handleSendMessage() async {
+  Future<void> sendMessage() async {
     final message = this.messageController.text.trim();
     if (message.isNotEmpty) {
       await this._contact.sendMessage(this._phone, message);
       this.messageController.clear();
       this.triggerStateChange();
     }
-  }
-
-  void goBack() {
-    this._navigator.pop();
-  }
-
-  bool isFirstMsgOfDay(index, time) {
-    if (index == this.chats.length - 1) {
-      return true;
-    } else if (this.getFormattedDate(this.chats[index + 1].time) != time) {
-      return true;
-    }
-    return false;
   }
 
   Future<void> sendImage() async {
@@ -84,6 +71,19 @@ class ChatsPageState extends WidgetStateBase<ChatsPage> {
       debugPrint(e.toString());
       return;
     }
+  }
+
+  void goBack() {
+    this._navigator.pop();
+  }
+
+  bool isFirstMsgOfDay(index, time) {
+    if (index == this.chats.length - 1) {
+      return true;
+    } else if (this.getFormattedDate(this.chats[index + 1].time) != time) {
+      return true;
+    }
+    return false;
   }
 
   void _loadContact() {

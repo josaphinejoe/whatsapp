@@ -7,7 +7,7 @@ import 'package:floater/floater.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPageState extends WidgetStateBase<SettingsPage> {
-  final _navigator = NavigationService.instance.retrieveNavigator("/");
+  final _rootNavigator = NavigationService.instance.retrieveNavigator("/");
   final _userService = ServiceLocator.instance.resolve<UserService>();
   final _themeProvider = ServiceLocator.instance.resolve<ThemeProvider>();
   final _scopedNavigator = NavigationService.instance.retrieveNavigator(Routes.user);
@@ -37,8 +37,8 @@ class SettingsPageState extends WidgetStateBase<SettingsPage> {
     this.showLoading();
     try {
       await this._userService.logout();
-      this._navigator.popUntil((route) => route.isFirst);
-      await this._navigator.pushReplacementNamed(Routes.login);
+      this._rootNavigator.popUntil((route) => route == "/");
+      await this._rootNavigator.pushNamed(Routes.login);
     } catch (e) {
       debugPrint(e.toString());
       return;

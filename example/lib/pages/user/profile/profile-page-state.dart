@@ -13,7 +13,7 @@ class ProfilePageState extends WidgetStateBase<ProfilePage> {
   final _userService = ServiceLocator.instance.resolve<UserService>();
   final _fileService = ServiceLocator.instance.resolve<FileService>();
   final _scopedNavigator = NavigationService.instance.retrieveNavigator(Routes.user);
-  final _navigator = NavigationService.instance.retrieveNavigator("/");
+  final _rootNavigator = NavigationService.instance.retrieveNavigator("/");
 
   late User _user;
   late String _firstName;
@@ -60,7 +60,7 @@ class ProfilePageState extends WidgetStateBase<ProfilePage> {
   }
 
   void goBack() {
-    this._navigator.pop();
+    this._rootNavigator.pop();
   }
 
   Future<void> editProfilePicture() async {
