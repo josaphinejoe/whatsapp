@@ -37,7 +37,7 @@ class SettingsPageState extends WidgetStateBase<SettingsPage> {
     this.showLoading();
     try {
       await this._userService.logout();
-      this._rootNavigator.popUntil((route) => route == "/");
+      this._rootNavigator.popUntil((_) => false);
       await this._rootNavigator.pushNamed(Routes.login);
     } catch (e) {
       debugPrint(e.toString());

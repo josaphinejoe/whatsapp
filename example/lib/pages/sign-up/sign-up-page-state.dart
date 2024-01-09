@@ -49,7 +49,7 @@ class SignUpPageState extends WidgetStateBase<SignUpPage> {
     try {
       await this._userService.createUser(this.firstName, this.lastName, this.phone, this.password);
       this._dialogService.showSuccessMessage("User created successfully");
-      this._navigator.popUntil((route) => route == "/");
+      this._navigator.popUntil((_) => false);
       await this._navigator.pushNamed(Routes.login);
     } catch (e) {
       debugPrint(e.toString());
@@ -62,7 +62,7 @@ class SignUpPageState extends WidgetStateBase<SignUpPage> {
   }
 
   void goToLogin() {
-    this._navigator.popUntil((route) => route == "/");
+    this._navigator.popUntil((_) => false);
     this._navigator.pushNamed(Routes.login);
   }
 
