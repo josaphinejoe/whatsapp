@@ -3,7 +3,6 @@ import 'package:example/sdk/services/file-service/default-file-service.dart';
 import 'package:example/sdk/services/file-service/file-service.dart';
 import 'package:example/sdk/services/user-service/mock-user-service.dart';
 import 'package:example/sdk/services/user-service/user-service.dart';
-import 'package:example/services/bottom-nav-manager.dart';
 import 'package:example/services/theme-provider.dart';
 import 'package:floater/floater.dart';
 
@@ -13,7 +12,6 @@ class Installer extends ServiceInstaller {
     registry
       ..registerSingleton<UserService>(() => MockUserService())
       ..registerSingleton<FileService>(() => DefaultFileService())
-      ..registerSingleton<BottomNavManager>(() => BottomNavManager())
       ..registerSingleton<ThemeProvider>(() => ThemeProvider())
       ..registerSingleton<DialogService>(() => DialogService());
   }

@@ -1,5 +1,5 @@
 import 'package:example/pages/user/settings/settings-page-state.dart';
-import 'package:example/pages/user/settings/widgets/display/display.dart';
+import 'package:example/pages/user/settings/widgets/settings-display/settings-display.dart';
 import 'package:floater/floater.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +18,7 @@ class SettingsPage extends StatefulWidgetBase<SettingsPageState> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Display(),
+              SettingsDisplay(),
               _AboutInfo(
                 userName: this.state.userName,
               ),

@@ -9,28 +9,18 @@ class ContactsPage extends StatefulWidgetBase<ContactsPageState> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.only(
-          top: 8.0,
-        ),
-        child: ListView.builder(
-          itemCount: this.state.contacts.length,
-          itemBuilder: (ctx, index) {
-            final contact = this.state.contacts[index];
-            return Padding(
-              padding: const EdgeInsets.only(
-                top: 18.0,
-                bottom: 18.0,
-                left: 10.0,
-                right: 10.0,
-              ),
-              child: _ContactTile(
-                contact: contact,
-                onTapChat: this.state.onTapChat,
-              ),
-            );
-          },
-        ),
+      child: ListView.builder(
+        itemCount: this.state.contacts.length,
+        itemBuilder: (ctx, index) {
+          final contact = this.state.contacts[index];
+          return Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: _ContactTile(
+              contact: contact,
+              onTapChat: this.state.onTapChat,
+            ),
+          );
+        },
       ),
     );
   }
@@ -63,7 +53,7 @@ class _ContactTile extends StatelessWidget {
           contact.profilePicture ??
               "https://cdn4.iconfinder.com/data/icons/business-and-office-29/512/396-_profile__avatar__image__dp_-512.png",
         ),
-        radius: 30,
+        radius: 25,
       ),
     );
   }

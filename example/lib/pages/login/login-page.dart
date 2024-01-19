@@ -95,7 +95,10 @@ class _LoginAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: const Text(
         "Log In",
-        style: TextStyle(color: Colors.white, fontSize: 25),
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 25,
+        ),
       ),
       backgroundColor: Theme.of(context).primaryColor,
       foregroundColor: Colors.white,

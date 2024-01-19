@@ -71,7 +71,7 @@ class ProfilePageState extends WidgetStateBase<ProfilePage> {
       final permanentFile =
           await this._fileService.moveFileToPermanentLocation(File(pickedFile.path), "profilePicture");
       this._profilePicture = permanentFile;
-      await this._user.changeProfilePicture(permanentFile);
+      await this._user.changeProfilePicture(this._profilePicture!);
       this.triggerStateChange();
     }
   }

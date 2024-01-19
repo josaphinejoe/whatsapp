@@ -63,7 +63,10 @@ class SignUpPage extends StatefulWidgetBase<SignUpPageState> {
               onPressed: () => this.state.goToLogin(),
               child: const Text(
                 "Log In",
-                style: TextStyle(fontSize: 20, color: Colors.red),
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.red,
+                ),
               ),
             ),
           ],
@@ -106,7 +109,10 @@ class _SignUpAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: const Text(
         "Sign Up",
-        style: TextStyle(color: Colors.white, fontSize: 25),
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 25,
+        ),
       ),
       backgroundColor: Theme.of(context).primaryColor,
       foregroundColor: Colors.white,

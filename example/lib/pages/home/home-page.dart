@@ -30,16 +30,13 @@ class HomePage extends StatefulWidgetBase<HomePageState> {
         ScopedNavigator(
           "/home",
           initialRoute: Routes.chatSummary,
-          key: this.state.nav0Key,
         ),
         ScopedNavigator(
           "/home",
-          key: this.state.nav1Key,
           initialRoute: Routes.contacts,
         ),
         ScopedNavigator(
           "/home",
-          key: this.state.nav2Key,
           initialRoute: Routes.addContact,
         ),
       ],

@@ -79,24 +79,27 @@ class _UserInput extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: TextField(
-              controller: this.messageController,
-              style: const TextStyle(
-                color: Colors.black54,
-              ),
-              decoration: InputDecoration(
-                hintStyle: const TextStyle(
+            child: Container(
+              color: Colors.white,
+              child: TextField(
+                controller: this.messageController,
+                style: const TextStyle(
                   color: Colors.black54,
                 ),
-                hintText: "Message",
-                prefixIcon: const Icon(Icons.emoji_emotions),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                suffixIcon: IconButton(
-                  onPressed: this.sendImage,
-                  icon: const Icon(
-                    Icons.image,
+                decoration: InputDecoration(
+                  hintStyle: const TextStyle(
+                    color: Colors.black54,
+                  ),
+                  hintText: "Message",
+                  prefixIcon: const Icon(Icons.emoji_emotions),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  suffixIcon: IconButton(
+                    onPressed: this.sendImage,
+                    icon: const Icon(
+                      Icons.image,
+                    ),
                   ),
                 ),
               ),

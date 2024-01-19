@@ -2,21 +2,15 @@ import 'package:example/pages/routes.dart';
 import 'package:example/pages/user/settings/settings-page.dart';
 import 'package:example/sdk/proxies/user/user.dart';
 import 'package:example/sdk/services/user-service/user-service.dart';
-import 'package:example/services/theme-provider.dart';
 import 'package:floater/floater.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPageState extends WidgetStateBase<SettingsPage> {
   final _rootNavigator = NavigationService.instance.retrieveNavigator("/");
   final _userService = ServiceLocator.instance.resolve<UserService>();
-  final _themeProvider = ServiceLocator.instance.resolve<ThemeProvider>();
   final _scopedNavigator = NavigationService.instance.retrieveNavigator(Routes.user);
 
   late User _user;
-
-  ValueNotifier<bool> get themeNotifier => _themeProvider.themeNotifier;
-
-  bool get isDarkMode => this._themeProvider.isDarkMode;
 
   String get userName => this._user.firstName;
 
@@ -26,11 +20,6 @@ class SettingsPageState extends WidgetStateBase<SettingsPage> {
 
   void goBack() {
     this._scopedNavigator.pop();
-  }
-
-  void toggleTheme(bool val) {
-    this._themeProvider.toggleTheme(val);
-    this.triggerStateChange();
   }
 
   Future<void> logout() async {

@@ -1,9 +1,9 @@
-import 'package:example/pages/user/settings/widgets/display/display-state.dart';
+import 'package:example/pages/user/settings/widgets/settings-display/settings-display-state.dart';
 import 'package:floater/floater.dart';
 import 'package:flutter/material.dart';
 
-class Display extends StatefulWidgetBase<DisplayState> {
-  Display() : super(() => DisplayState());
+class SettingsDisplay extends StatefulWidgetBase<SettingsDisplayState> {
+  SettingsDisplay() : super(() => SettingsDisplayState());
 
   @override
   Widget build(BuildContext context) {
