@@ -1,60 +1,44 @@
-import 'package:example/pages/home/home_page.dart';
-import 'package:example/pages/manage_todo/manage_todo_description/manage_todo_description_page.dart';
-import 'package:example/pages/manage_todo/manage_todo_page.dart';
-import 'package:example/pages/manage_todo/manage_todo_title/manage_todo_title_page.dart';
-import 'package:example/pages/todos/todos_page.dart';
-import 'package:example/pages/view_todo/view_todo_page.dart';
+import 'package:example/pages/add-contact/add-contact-page.dart';
+import 'package:example/pages/chat-summary/chat-summary-page.dart';
+import 'package:example/pages/chats/chats-page.dart';
+import 'package:example/pages/contacts/contacts-page.dart';
+import 'package:example/pages/home/home-page.dart';
+import 'package:example/pages/login/login-page.dart';
+import 'package:example/pages/user/settings/settings-page.dart';
+import 'package:example/pages/sign-up/sign-up-page.dart';
+import 'package:example/pages/user/profile/profile-page.dart';
+import 'package:example/pages/user/user-page.dart';
+
 import 'package:floater/floater.dart';
-import 'package:example/pages/splash/splash_page.dart';
-import 'package:flutter/widgets.dart';
+import 'package:example/pages/splash/splash-page.dart';
 
 abstract class Routes {
   static const splash = "/splash";
   static const home = "/home";
+  static const chatSummary = "$home/chatSummary";
+  static const contacts = "$home/contacts";
+  static const addContact = "$home/addContact";
+  static const chats = "/chats?{phone: string}";
+  static const user = "/user";
+  static const profile = "$user/profile";
+  static const settings = "$user/settings";
+  static const signUp = "/signUp";
+  static const login = "/login";
 
-  static const todos = "$home/todos";
-  static const manageTodo = "$home/manageTodo?{id?: string}";
-  static const manageTodoTitle = "$home/manageTodo/title";
-  static const manageTodoDescription = "$home/manageTodo/description";
-
-  static const viewTodo = "$home/viewTodo?{id: string}";
-
-  // Call this function in main.dart to register all the app pages
-  // and bootstrap the navigation
   static void initializeNavigation() {
-    // registering app pages here.
-    // root nav pages
     NavigationManager.instance
       ..registerPage(Routes.splash, (routeArgs) => SplashPage())
-      ..registerPage(Routes.home, (routeArgs) => HomePage());
+      ..registerPage(Routes.home, (routeArgs) => HomePage())
+      ..registerPage(Routes.chatSummary, (routeArgs) => ChatSummaryPage())
+      ..registerPage(Routes.contacts, (routeArgs) => ContactsPage())
+      ..registerPage(Routes.addContact, (routeArgs) => AddContactPage())
+      ..registerPage(Routes.chats, (routeArgs) => ChatsPage(routeArgs["phone"]))
+      ..registerPage(Routes.user, (routeArgs) => UserPage())
+      ..registerPage(Routes.profile, (routeArgs) => ProfilePage())
+      ..registerPage(Routes.settings, (routeArgs) => SettingsPage())
+      ..registerPage(Routes.signUp, (routeArgs) => SignUpPage())
+      ..registerPage(Routes.login, (routeArgs) => LoginPage());
 
-    // Home Tab Pages
-    NavigationManager.instance
-      ..registerPage(Routes.todos, (routeArgs) => TodosPage())
-      ..registerPage(Routes.manageTodo, (routeArgs) => ManageTodoPage(routeArgs["id"]))
-      ..registerPage(Routes.manageTodoTitle, (routeArgs) => ManageTodoTitlePage())
-      ..registerPage(Routes.manageTodoDescription, (routeArgs) => ManageTodoDescriptionPage())
-      ..registerPage(
-        Routes.viewTodo,
-        (routeArgs) => ViewTodoPage(routeArgs["id"]),
-        fullscreenDialog: false,
-        pageType: PageType.custom,
-        customPageRouteBuilder: CustomPageRouteBuilder(
-          opaque: false,
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            final tween = Tween(begin: 0.0, end: 1.0);
-            final fadeAnimation = animation.drive(tween);
-            return FadeTransition(
-              opacity: fadeAnimation,
-              child: child,
-            );
-          },
-        ),
-      );
-    // ..registerPage(
-    //     Routes.viewTodo, (routeArgs) => ViewTodoPage(routeArgs["id"]));
-
-    // bootstrapping Navigation
     NavigationManager.instance.bootstrap();
   }
 }
